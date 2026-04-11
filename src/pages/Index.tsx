@@ -1,11 +1,18 @@
 import { Link } from "react-router-dom";
-import { Search, Star, Shield, Globe, Clock, Award, ChevronRight } from "lucide-react";
+import { Search, Star, Shield, Globe, Clock, Award, ChevronRight, ChevronDown, Mountain, Waves, Sun, Building, Map, Compass } from "lucide-react";
 import { useState } from "react";
 import heroImage from "@/assets/hero-oman.jpg";
+import tourMuscat from "@/assets/tour-muscat.jpg";
+import tourWadiShab from "@/assets/tour-wadi-shab.jpg";
+import tourWahiba from "@/assets/tour-wahiba.jpg";
+import tourJebelShams from "@/assets/tour-jebel-shams.jpg";
+import tourJebelAkhdar from "@/assets/tour-jebel-akhdar.jpg";
+import tourNizwa from "@/assets/tour-nizwa.jpg";
 import { tours } from "@/data/tours";
 import { TourCard } from "@/components/TourCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { SunshineLogo } from "@/components/SunshineLogo";
 
 const testimonials = [
   {
@@ -34,6 +41,15 @@ const testimonials = [
   },
 ];
 
+const tourCategories = [
+  { label: "Day Trips", icon: Sun, image: tourMuscat, href: "/tours", rotation: "-rotate-3" },
+  { label: "Wadi Adventures", icon: Waves, image: tourWadiShab, href: "/tours", rotation: "rotate-2" },
+  { label: "Desert Tours", icon: Compass, image: tourWahiba, href: "/tours", rotation: "-rotate-2" },
+  { label: "Mountain Trips", icon: Mountain, image: tourJebelShams, href: "/tours", rotation: "rotate-3" },
+  { label: "City Tours", icon: Building, image: tourNizwa, href: "/tours", rotation: "-rotate-1" },
+  { label: "Multi-Day", icon: Map, image: tourJebelAkhdar, href: "/tours", rotation: "rotate-1" },
+];
+
 const Index = () => {
   const [search, setSearch] = useState("");
   const featuredTours = tours.slice(0, 4);
@@ -45,39 +61,39 @@ const Index = () => {
   return (
     <div className="min-h-screen">
       {/* Hero */}
-      <section className="relative h-[85vh] min-h-[600px] flex items-center justify-center overflow-hidden">
+      <section className="relative h-[100vh] min-h-[700px] flex items-center justify-center overflow-hidden">
         <img src={heroImage} alt="Oman desert landscape" width={1920} height={1080} className="absolute inset-0 w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
-        <div className="relative z-10 container text-center text-white px-4">
-          <p className="text-sm md:text-base uppercase tracking-[0.3em] mb-4 opacity-90 font-body">
+        <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/50 to-background" />
+        <div className="relative z-10 container text-center text-foreground px-4">
+          <p className="text-sm md:text-base uppercase tracking-[0.3em] mb-4 text-accent font-body font-medium">
             Sunshine Tours Oman
           </p>
-          <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl font-bold mb-4 leading-tight">
-            Explore the Wonders<br />of Oman
+          <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl font-bold mb-2 leading-tight">
+            Discover where your
           </h1>
-          <p className="text-lg md:text-xl opacity-90 mb-8 max-w-2xl mx-auto font-body">
-            With the Best Tour Guides · 19+ Years of Experience
-          </p>
+          <h1 className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight italic">
+            Adventure Begins
+          </h1>
 
           {/* Search */}
-          <div className="max-w-xl mx-auto relative mb-6">
+          <div className="max-w-xl mx-auto relative mb-8">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
             <Input
               placeholder="Search tours by name..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-12 h-14 text-base bg-white/95 text-foreground rounded-full border-0 shadow-xl"
+              className="pl-12 h-14 text-base bg-card/90 backdrop-blur text-foreground rounded-full border-border/50 shadow-xl focus:border-accent"
             />
             {search && filteredTours.length > 0 && (
-              <div className="absolute top-full mt-2 w-full bg-card rounded-lg shadow-xl overflow-hidden z-20">
+              <div className="absolute top-full mt-2 w-full bg-card rounded-lg shadow-xl overflow-hidden z-20 border border-border/50">
                 {filteredTours.map((t) => (
                   <Link
                     key={t.id}
                     to={`/tours/${t.slug}`}
-                    className="block px-4 py-3 hover:bg-muted text-foreground text-left text-sm border-b last:border-0"
+                    className="block px-4 py-3 hover:bg-muted text-foreground text-left text-sm border-b border-border/30 last:border-0"
                   >
                     <span className="font-medium">{t.name}</span>
-                    <span className="ml-2 text-muted-foreground">OMR {t.price}</span>
+                    <span className="ml-2 text-accent">OMR {t.price}</span>
                   </Link>
                 ))}
               </div>
@@ -91,13 +107,50 @@ const Index = () => {
             </Button>
           </Link>
         </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce">
+          <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center cursor-pointer">
+            <ChevronDown className="h-5 w-5 text-accent-foreground" />
+          </div>
+        </div>
+      </section>
+
+      {/* Category Cards - Polaroid Style */}
+      <section className="py-16 md:py-24">
+        <div className="container">
+          <div className="text-center mb-12">
+            <p className="text-sm uppercase tracking-[0.2em] text-accent font-semibold mb-2">Explore By Category</p>
+            <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground">Choose Your Adventure</h2>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
+            {tourCategories.map((cat) => (
+              <Link
+                key={cat.label}
+                to={cat.href}
+                className={`group relative bg-card border-2 border-border/50 rounded-xl p-3 pb-4 transition-all duration-300 hover:border-accent/50 hover:shadow-xl hover:shadow-accent/10 hover:-translate-y-2 ${cat.rotation}`}
+              >
+                <div className="aspect-square rounded-lg overflow-hidden mb-3 shadow-inner">
+                  <img
+                    src={cat.image}
+                    alt={cat.label}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                </div>
+                <p className="text-center font-heading font-bold text-sm text-foreground uppercase tracking-wider">
+                  {cat.label}
+                </p>
+              </Link>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* Featured Tours */}
       <section className="py-16 md:py-24">
         <div className="container">
           <div className="text-center mb-12">
-            <p className="text-sm uppercase tracking-[0.2em] text-accent-foreground font-semibold mb-2">Our Popular Tours</p>
+            <p className="text-sm uppercase tracking-[0.2em] text-accent font-semibold mb-2">Our Popular Tours</p>
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground">Featured Experiences</h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -107,7 +160,7 @@ const Index = () => {
           </div>
           <div className="text-center mt-10">
             <Link to="/tours">
-              <Button variant="outline" size="lg" className="rounded-full">
+              <Button variant="outline" size="lg" className="rounded-full border-accent/50 text-accent hover:bg-accent hover:text-accent-foreground">
                 View All Tours <ChevronRight className="ml-1 h-4 w-4" />
               </Button>
             </Link>
@@ -115,11 +168,24 @@ const Index = () => {
         </div>
       </section>
 
+      {/* 19+ Years Badge */}
+      <section className="py-8">
+        <div className="container flex justify-center">
+          <div className="flex items-center gap-4 bg-card border border-accent/30 rounded-full px-8 py-4">
+            <SunshineLogo className="h-12 w-auto" />
+            <div className="border-l border-border/50 pl-4">
+              <p className="text-2xl font-heading font-bold text-accent">19+</p>
+              <p className="text-xs text-muted-foreground uppercase tracking-wider">Years of Excellence</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Why Choose Us */}
-      <section id="about" className="py-16 md:py-24 bg-primary text-primary-foreground">
+      <section id="about" className="py-16 md:py-24">
         <div className="container">
           <div className="text-center mb-12">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold">Why Choose Sunshine Tours?</h2>
+            <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground">Why Choose Sunshine Tours?</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
@@ -128,12 +194,12 @@ const Index = () => {
               { icon: Globe, title: "Multi-Language Guides", desc: "Professional guides speaking English, Arabic, and more." },
               { icon: Clock, title: "Flexible Scheduling", desc: "Choose your dates. Hotel pickup & drop-off included on every tour." },
             ].map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="text-center p-6">
+              <div key={title} className="text-center p-6 bg-card rounded-xl border border-border/50 hover:border-accent/30 transition-colors">
                 <div className="w-14 h-14 rounded-full bg-accent/20 flex items-center justify-center mx-auto mb-4">
                   <Icon className="h-7 w-7 text-accent" />
                 </div>
-                <h3 className="font-heading text-xl font-semibold mb-2">{title}</h3>
-                <p className="text-sm opacity-80 leading-relaxed">{desc}</p>
+                <h3 className="font-heading text-xl font-semibold mb-2 text-foreground">{title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
               </div>
             ))}
           </div>
@@ -144,12 +210,12 @@ const Index = () => {
       <section className="py-16 md:py-24">
         <div className="container">
           <div className="text-center mb-12">
-            <p className="text-sm uppercase tracking-[0.2em] text-accent-foreground font-semibold mb-2">Traveler Reviews</p>
+            <p className="text-sm uppercase tracking-[0.2em] text-accent font-semibold mb-2">Traveler Reviews</p>
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground">What Our Guests Say</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {testimonials.map((t, i) => (
-              <div key={i} className="bg-card p-6 rounded-lg shadow-md border">
+              <div key={i} className="bg-card p-6 rounded-xl border border-border/50 hover:border-accent/30 transition-colors">
                 <div className="flex gap-1 mb-3">
                   {Array.from({ length: t.rating }).map((_, j) => (
                     <Star key={j} className="h-4 w-4 fill-accent text-accent" />
