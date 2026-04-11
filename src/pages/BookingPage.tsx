@@ -1,4 +1,4 @@
-import { useParams, useSearchParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useSearchParams, Link } from "react-router-dom";
 import { getTourBySlug } from "@/data/tours";
 import { saveBooking, generateReference, type Booking } from "@/data/bookings";
 import { Button } from "@/components/ui/button";
@@ -6,8 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Calendar } from "@/components/ui/calendar";
 import { Progress } from "@/components/ui/progress";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { CalendarIcon, Minus, Plus, Check, CreditCard, MessageCircle } from "lucide-react";
+import { Minus, Plus, Check, CreditCard, MessageCircle } from "lucide-react";
 import { useState } from "react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
@@ -27,7 +26,6 @@ const steps = ["Date", "Guests", "Details", "Review", "Payment"];
 const BookingPage = () => {
   const { slug } = useParams();
   const [params] = useSearchParams();
-  const navigate = useNavigate();
   const tour = getTourBySlug(slug || "");
 
   const [step, setStep] = useState(1);
@@ -109,44 +107,44 @@ const BookingPage = () => {
     return (
       <div className="min-h-screen py-10">
         <div className="container max-w-lg mx-auto text-center space-y-6">
-          <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto">
-            <Check className="h-10 w-10 text-primary" />
+          <div className="w-20 h-20 rounded-full bg-accent/20 flex items-center justify-center mx-auto">
+            <Check className="h-10 w-10 text-accent" />
           </div>
           <h1 className="font-heading text-3xl font-bold text-foreground">Booking Confirmed!</h1>
           <p className="text-muted-foreground">Thank you, {booking.customerName}! Your adventure awaits.</p>
 
-          <div className="bg-card rounded-lg border p-6 text-left space-y-3">
+          <div className="bg-card rounded-xl border border-border/50 p-6 text-left space-y-3">
             <div className="flex justify-between text-sm">
               <span className="text-muted-foreground">Reference</span>
-              <span className="font-bold font-mono text-primary">{booking.reference}</span>
+              <span className="font-bold font-mono text-accent">{booking.reference}</span>
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-muted-foreground">Tour</span>
-              <span className="font-medium">{tour.shortName}</span>
+              <span className="font-medium text-foreground">{tour.shortName}</span>
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-muted-foreground">Date</span>
-              <span>{booking.date}</span>
+              <span className="text-foreground">{booking.date}</span>
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-muted-foreground">Guests</span>
-              <span>{booking.adults} adults{booking.children > 0 ? `, ${booking.children} children` : ""}</span>
+              <span className="text-foreground">{booking.adults} adults{booking.children > 0 ? `, ${booking.children} children` : ""}</span>
             </div>
-            <div className="flex justify-between text-sm font-bold border-t pt-2">
-              <span>Total Paid</span>
-              <span className="text-primary">OMR {booking.totalPrice.toLocaleString()}</span>
+            <div className="flex justify-between text-sm font-bold border-t border-border/50 pt-2">
+              <span className="text-foreground">Total Paid</span>
+              <span className="text-accent">OMR {booking.totalPrice.toLocaleString()}</span>
             </div>
           </div>
 
           {/* QR placeholder */}
-          <div className="bg-card border rounded-lg p-6">
-            <p className="text-sm font-semibold mb-3">Your Booking QR Code</p>
-            <div className="w-32 h-32 mx-auto bg-foreground/5 rounded-lg flex items-center justify-center border-2 border-dashed">
+          <div className="bg-card border border-border/50 rounded-xl p-6">
+            <p className="text-sm font-semibold mb-3 text-foreground">Your Booking QR Code</p>
+            <div className="w-32 h-32 mx-auto bg-muted rounded-lg flex items-center justify-center border-2 border-dashed border-border">
               <span className="text-xs text-muted-foreground text-center px-2">QR: {booking.reference}</span>
             </div>
           </div>
 
-          <div className="bg-primary/10 border border-primary/20 rounded-lg p-4 text-sm text-primary">
+          <div className="bg-accent/10 border border-accent/20 rounded-xl p-4 text-sm text-accent">
             <MessageCircle className="h-5 w-5 inline mr-2" />
             We sent a confirmation to your WhatsApp!
           </div>
@@ -163,7 +161,7 @@ const BookingPage = () => {
               </Button>
             </a>
             <Link to="/" className="flex-1">
-              <Button variant="outline" className="w-full">Back to Home</Button>
+              <Button variant="outline" className="w-full border-border/50 text-foreground">Back to Home</Button>
             </Link>
           </div>
         </div>
@@ -176,7 +174,7 @@ const BookingPage = () => {
       <div className="container max-w-2xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <Link to={`/tours/${tour.slug}`} className="text-sm text-muted-foreground hover:text-primary mb-2 inline-block">
+          <Link to={`/tours/${tour.slug}`} className="text-sm text-muted-foreground hover:text-accent mb-2 inline-block">
             ← Back to {tour.shortName}
           </Link>
           <h1 className="font-heading text-2xl md:text-3xl font-bold text-foreground">Book Your Tour</h1>
@@ -187,7 +185,7 @@ const BookingPage = () => {
         <div className="mb-8">
           <div className="flex justify-between text-xs font-medium mb-2">
             {steps.map((s, i) => (
-              <span key={s} className={step > i + 1 ? "text-primary" : step === i + 1 ? "text-foreground" : "text-muted-foreground"}>
+              <span key={s} className={step > i + 1 ? "text-accent" : step === i + 1 ? "text-foreground" : "text-muted-foreground"}>
                 {s}
               </span>
             ))}
@@ -195,11 +193,11 @@ const BookingPage = () => {
           <Progress value={(step / 5) * 100} className="h-2" />
         </div>
 
-        <div className="bg-card rounded-lg border shadow-sm p-6 space-y-6">
+        <div className="bg-card rounded-xl border border-border/50 p-6 space-y-6">
           {/* Step 1: Date */}
           {step === 1 && (
             <div className="space-y-4">
-              <h2 className="font-heading text-xl font-bold">Select Your Date</h2>
+              <h2 className="font-heading text-xl font-bold text-foreground">Select Your Date</h2>
               <Calendar
                 mode="single"
                 selected={date}
@@ -208,43 +206,43 @@ const BookingPage = () => {
                   const ds = d.toISOString().split("T")[0];
                   return d < new Date() || !availableSet.has(ds);
                 }}
-                className="rounded-md border mx-auto pointer-events-auto"
+                className="rounded-md border border-border/50 mx-auto pointer-events-auto"
               />
-              {date && <p className="text-center text-sm text-primary font-medium">Selected: {format(date, "EEEE, MMMM d, yyyy")}</p>}
+              {date && <p className="text-center text-sm text-accent font-medium">Selected: {format(date, "EEEE, MMMM d, yyyy")}</p>}
             </div>
           )}
 
           {/* Step 2: Guests */}
           {step === 2 && (
             <div className="space-y-6">
-              <h2 className="font-heading text-xl font-bold">Guests & Pickup</h2>
+              <h2 className="font-heading text-xl font-bold text-foreground">Guests & Pickup</h2>
               <div className="space-y-4">
-                <div className="flex items-center justify-between py-3 border-b">
+                <div className="flex items-center justify-between py-3 border-b border-border/50">
                   <div>
-                    <p className="font-medium">Adults</p>
+                    <p className="font-medium text-foreground">Adults</p>
                     <p className="text-xs text-muted-foreground">OMR {tour.price} per person</p>
                   </div>
                   <div className="flex items-center gap-3">
-                    <button onClick={() => setAdults(Math.max(1, adults - 1))} className="w-9 h-9 rounded-full border flex items-center justify-center hover:bg-muted"><Minus className="h-4 w-4" /></button>
-                    <span className="w-8 text-center font-semibold text-lg">{adults}</span>
-                    <button onClick={() => setAdults(Math.min(tour.maxGroupSize, adults + 1))} className="w-9 h-9 rounded-full border flex items-center justify-center hover:bg-muted"><Plus className="h-4 w-4" /></button>
+                    <button onClick={() => setAdults(Math.max(1, adults - 1))} className="w-9 h-9 rounded-full border border-border/50 flex items-center justify-center hover:bg-muted text-foreground"><Minus className="h-4 w-4" /></button>
+                    <span className="w-8 text-center font-semibold text-lg text-foreground">{adults}</span>
+                    <button onClick={() => setAdults(Math.min(tour.maxGroupSize, adults + 1))} className="w-9 h-9 rounded-full border border-border/50 flex items-center justify-center hover:bg-muted text-foreground"><Plus className="h-4 w-4" /></button>
                   </div>
                 </div>
-                <div className="flex items-center justify-between py-3 border-b">
+                <div className="flex items-center justify-between py-3 border-b border-border/50">
                   <div>
-                    <p className="font-medium">Children (3–12)</p>
+                    <p className="font-medium text-foreground">Children (3–12)</p>
                     <p className="text-xs text-muted-foreground">OMR {tour.childPrice} per person</p>
                   </div>
                   <div className="flex items-center gap-3">
-                    <button onClick={() => setChildren(Math.max(0, children - 1))} className="w-9 h-9 rounded-full border flex items-center justify-center hover:bg-muted"><Minus className="h-4 w-4" /></button>
-                    <span className="w-8 text-center font-semibold text-lg">{children}</span>
-                    <button onClick={() => setChildren(Math.min(4, children + 1))} className="w-9 h-9 rounded-full border flex items-center justify-center hover:bg-muted"><Plus className="h-4 w-4" /></button>
+                    <button onClick={() => setChildren(Math.max(0, children - 1))} className="w-9 h-9 rounded-full border border-border/50 flex items-center justify-center hover:bg-muted text-foreground"><Minus className="h-4 w-4" /></button>
+                    <span className="w-8 text-center font-semibold text-lg text-foreground">{children}</span>
+                    <button onClick={() => setChildren(Math.min(4, children + 1))} className="w-9 h-9 rounded-full border border-border/50 flex items-center justify-center hover:bg-muted text-foreground"><Plus className="h-4 w-4" /></button>
                   </div>
                 </div>
               </div>
               <div>
-                <Label htmlFor="pickup">Pickup Location</Label>
-                <Input id="pickup" placeholder="e.g. Grand Hyatt Muscat, Airport..." value={pickup} onChange={(e) => setPickup(e.target.value)} className="mt-1" />
+                <Label htmlFor="pickup" className="text-foreground">Pickup Location</Label>
+                <Input id="pickup" placeholder="e.g. Grand Hyatt Muscat, Airport..." value={pickup} onChange={(e) => setPickup(e.target.value)} className="mt-1 bg-muted/50 border-border/50" />
               </div>
             </div>
           )}
@@ -252,7 +250,7 @@ const BookingPage = () => {
           {/* Step 3: Customer details */}
           {step === 3 && (
             <div className="space-y-4">
-              <h2 className="font-heading text-xl font-bold">Your Details</h2>
+              <h2 className="font-heading text-xl font-bold text-foreground">Your Details</h2>
               {[
                 { key: "name", label: "Full Name", placeholder: "Mohammed Al-Said", type: "text" },
                 { key: "email", label: "Email Address", placeholder: "you@example.com", type: "email" },
@@ -261,14 +259,14 @@ const BookingPage = () => {
                 { key: "nationality", label: "Nationality", placeholder: "e.g. British, German, Omani", type: "text" },
               ].map(({ key, label, placeholder, type }) => (
                 <div key={key}>
-                  <Label htmlFor={key}>{label}</Label>
+                  <Label htmlFor={key} className="text-foreground">{label}</Label>
                   <Input
                     id={key}
                     type={type}
                     placeholder={placeholder}
                     value={form[key as keyof typeof form]}
                     onChange={(e) => setForm({ ...form, [key]: e.target.value })}
-                    className={cn("mt-1", errors[key] && "border-destructive")}
+                    className={cn("mt-1 bg-muted/50 border-border/50", errors[key] && "border-destructive")}
                   />
                   {errors[key] && <p className="text-xs text-destructive mt-1">{errors[key]}</p>}
                 </div>
@@ -279,28 +277,28 @@ const BookingPage = () => {
           {/* Step 4: Review */}
           {step === 4 && (
             <div className="space-y-4">
-              <h2 className="font-heading text-xl font-bold">Review Your Booking</h2>
+              <h2 className="font-heading text-xl font-bold text-foreground">Review Your Booking</h2>
               <div className="space-y-3 text-sm">
-                <div className="flex justify-between py-2 border-b"><span className="text-muted-foreground">Tour</span><span className="font-medium">{tour.shortName}</span></div>
-                <div className="flex justify-between py-2 border-b"><span className="text-muted-foreground">Date</span><span>{date ? format(date, "PPP") : ""}</span></div>
-                <div className="flex justify-between py-2 border-b"><span className="text-muted-foreground">Guests</span><span>{adults} adults{children > 0 ? `, ${children} children` : ""}</span></div>
-                <div className="flex justify-between py-2 border-b"><span className="text-muted-foreground">Pickup</span><span>{pickup}</span></div>
-                <div className="flex justify-between py-2 border-b"><span className="text-muted-foreground">Name</span><span>{form.name}</span></div>
-                <div className="flex justify-between py-2 border-b"><span className="text-muted-foreground">Email</span><span>{form.email}</span></div>
-                <div className="flex justify-between py-2 border-b"><span className="text-muted-foreground">Phone</span><span>{form.phone}</span></div>
-                <div className="flex justify-between py-2 border-b">
+                <div className="flex justify-between py-2 border-b border-border/50"><span className="text-muted-foreground">Tour</span><span className="font-medium text-foreground">{tour.shortName}</span></div>
+                <div className="flex justify-between py-2 border-b border-border/50"><span className="text-muted-foreground">Date</span><span className="text-foreground">{date ? format(date, "PPP") : ""}</span></div>
+                <div className="flex justify-between py-2 border-b border-border/50"><span className="text-muted-foreground">Guests</span><span className="text-foreground">{adults} adults{children > 0 ? `, ${children} children` : ""}</span></div>
+                <div className="flex justify-between py-2 border-b border-border/50"><span className="text-muted-foreground">Pickup</span><span className="text-foreground">{pickup}</span></div>
+                <div className="flex justify-between py-2 border-b border-border/50"><span className="text-muted-foreground">Name</span><span className="text-foreground">{form.name}</span></div>
+                <div className="flex justify-between py-2 border-b border-border/50"><span className="text-muted-foreground">Email</span><span className="text-foreground">{form.email}</span></div>
+                <div className="flex justify-between py-2 border-b border-border/50"><span className="text-muted-foreground">Phone</span><span className="text-foreground">{form.phone}</span></div>
+                <div className="flex justify-between py-2 border-b border-border/50">
                   <span className="text-muted-foreground">Adults ({adults} × OMR {tour.price})</span>
-                  <span>OMR {(adults * tour.price).toLocaleString()}</span>
+                  <span className="text-foreground">OMR {(adults * tour.price).toLocaleString()}</span>
                 </div>
                 {children > 0 && (
-                  <div className="flex justify-between py-2 border-b">
+                  <div className="flex justify-between py-2 border-b border-border/50">
                     <span className="text-muted-foreground">Children ({children} × OMR {tour.childPrice})</span>
-                    <span>OMR {(children * tour.childPrice).toLocaleString()}</span>
+                    <span className="text-foreground">OMR {(children * tour.childPrice).toLocaleString()}</span>
                   </div>
                 )}
                 <div className="flex justify-between py-3 text-lg font-bold">
-                  <span>Total</span>
-                  <span className="text-primary">OMR {total.toLocaleString()}</span>
+                  <span className="text-foreground">Total</span>
+                  <span className="text-accent">OMR {total.toLocaleString()}</span>
                 </div>
               </div>
             </div>
@@ -309,42 +307,42 @@ const BookingPage = () => {
           {/* Step 5: Payment */}
           {step === 5 && (
             <div className="space-y-6">
-              <h2 className="font-heading text-xl font-bold">Payment</h2>
-              <div className="bg-muted/50 rounded-lg p-4 border">
+              <h2 className="font-heading text-xl font-bold text-foreground">Payment</h2>
+              <div className="bg-muted/50 rounded-xl p-4 border border-border/50">
                 <p className="text-sm text-muted-foreground mb-3">Select payment method</p>
                 <div className="space-y-2">
-                  <label className="flex items-center gap-3 p-3 rounded-lg border bg-card cursor-pointer hover:border-primary">
-                    <input type="radio" name="payment" defaultChecked className="accent-primary" />
-                    <CreditCard className="h-5 w-5 text-primary" />
-                    <span className="font-medium text-sm">Credit / Debit Card</span>
+                  <label className="flex items-center gap-3 p-3 rounded-lg border border-border/50 bg-card cursor-pointer hover:border-accent/50">
+                    <input type="radio" name="payment" defaultChecked className="accent-[hsl(35,100%,55%)]" />
+                    <CreditCard className="h-5 w-5 text-accent" />
+                    <span className="font-medium text-sm text-foreground">Credit / Debit Card</span>
                   </label>
-                  <label className="flex items-center gap-3 p-3 rounded-lg border bg-card cursor-pointer hover:border-primary">
-                    <input type="radio" name="payment" className="accent-primary" />
-                    <span className="font-bold text-sm text-primary">OmanNet</span>
+                  <label className="flex items-center gap-3 p-3 rounded-lg border border-border/50 bg-card cursor-pointer hover:border-accent/50">
+                    <input type="radio" name="payment" className="accent-[hsl(35,100%,55%)]" />
+                    <span className="font-bold text-sm text-accent">OmanNet</span>
                   </label>
                 </div>
               </div>
               <div className="text-center">
-                <p className="text-2xl font-heading font-bold text-primary mb-1">OMR {total.toLocaleString()}</p>
+                <p className="text-2xl font-heading font-bold text-accent mb-1">OMR {total.toLocaleString()}</p>
                 <p className="text-xs text-muted-foreground">Demo mode – no real charge</p>
               </div>
             </div>
           )}
 
           {/* Navigation buttons */}
-          <div className="flex gap-3 pt-4 border-t">
+          <div className="flex gap-3 pt-4 border-t border-border/50">
             {step > 1 && (
-              <Button variant="outline" onClick={() => setStep(step - 1)} className="flex-1">
+              <Button variant="outline" onClick={() => setStep(step - 1)} className="flex-1 border-border/50 text-foreground">
                 Back
               </Button>
             )}
             {step < 5 && (
-              <Button onClick={nextStep} className="flex-1 bg-primary text-primary-foreground">
+              <Button onClick={nextStep} className="flex-1 bg-accent text-accent-foreground hover:bg-accent/90">
                 Continue
               </Button>
             )}
             {step === 5 && (
-              <Button onClick={handlePayment} disabled={processing} className="flex-1 bg-accent text-accent-foreground font-semibold">
+              <Button onClick={handlePayment} disabled={processing} className="flex-1 bg-accent text-accent-foreground font-semibold hover:bg-accent/90">
                 {processing ? "Processing..." : `Pay OMR ${total.toLocaleString()}`}
               </Button>
             )}
