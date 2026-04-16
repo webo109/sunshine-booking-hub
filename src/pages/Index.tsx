@@ -63,7 +63,17 @@ const Index = () => {
     <div className="min-h-screen">
       {/* Hero */}
       <section className="relative h-[100vh] min-h-[700px] flex items-center justify-center overflow-hidden">
-        <img src={heroImage} alt="Oman desert landscape" width={1920} height={1080} className="absolute inset-0 w-full h-full object-cover" />
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster={heroImage}
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src={heroVideo.url} type="video/mp4" />
+          <img src={heroImage} alt="Oman desert landscape" className="absolute inset-0 w-full h-full object-cover" />
+        </video>
         <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/50 to-background" />
         <div className="relative z-10 container text-center text-foreground px-4">
           <p className="text-sm md:text-base uppercase tracking-[0.3em] mb-4 text-accent font-body font-medium">
