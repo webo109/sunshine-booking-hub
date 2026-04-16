@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Search, Star, Shield, Globe, Clock, Award, ChevronRight, ChevronDown, Mountain, Waves, Sun, Building, Map, Compass } from "lucide-react";
 import { useState } from "react";
 import heroImage from "@/assets/hero-oman.jpg";
+import heroVideo from "@/assets/hero-oman.mp4.asset.json";
 import tourMuscat from "@/assets/tour-muscat.jpg";
 import tourWadiShab from "@/assets/tour-wadi-shab.jpg";
 import tourWahiba from "@/assets/tour-wahiba.jpg";
