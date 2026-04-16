@@ -1,5 +1,6 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { getTourBySlug } from "@/data/tours";
+import { getTourVideo } from "@/data/tourVideos";
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -49,9 +50,22 @@ const TourDetail = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main content */}
           <div className="lg:col-span-2 space-y-8">
-            {/* Hero image */}
-            <div className="rounded-xl overflow-hidden aspect-[16/9] border border-border/50">
-              <img src={tour.image} alt={tour.name} className="w-full h-full object-cover" width={800} height={600} />
+            {/* Hero video / image */}
+            <div className="relative rounded-xl overflow-hidden aspect-[16/9] border border-border/50 bg-muted">
+              {getTourVideo(tour.slug) ? (
+                <video
+                  src={getTourVideo(tour.slug)}
+                  poster={tour.image}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <img src={tour.image} alt={tour.name} className="w-full h-full object-cover" width={800} height={600} />
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent pointer-events-none" />
             </div>
 
             <div>
