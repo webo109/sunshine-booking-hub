@@ -11,9 +11,16 @@ import tourJebelAkhdar from "@/assets/tour-jebel-akhdar.jpg";
 import tourNizwa from "@/assets/tour-nizwa.jpg";
 import { tours } from "@/data/tours";
 import { TourCard } from "@/components/TourCard";
+import { CategoryCard } from "@/components/CategoryCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SunshineLogo } from "@/components/SunshineLogo";
+import catDayTrips from "@/assets/cat-day-trips.mp4.asset.json";
+import catWadi from "@/assets/cat-wadi.mp4.asset.json";
+import catDesert from "@/assets/cat-desert.mp4.asset.json";
+import catMountain from "@/assets/cat-mountain.mp4.asset.json";
+import catCity from "@/assets/cat-city.mp4.asset.json";
+import catMultiday from "@/assets/cat-multiday.mp4.asset.json";
 
 const testimonials = [
   {
@@ -43,12 +50,12 @@ const testimonials = [
 ];
 
 const tourCategories = [
-  { label: "Day Trips", icon: Sun, image: tourMuscat, href: "/tours", rotation: "-rotate-3" },
-  { label: "Wadi Adventures", icon: Waves, image: tourWadiShab, href: "/tours", rotation: "rotate-2" },
-  { label: "Desert Tours", icon: Compass, image: tourWahiba, href: "/tours", rotation: "-rotate-2" },
-  { label: "Mountain Trips", icon: Mountain, image: tourJebelShams, href: "/tours", rotation: "rotate-3" },
-  { label: "City Tours", icon: Building, image: tourNizwa, href: "/tours", rotation: "-rotate-1" },
-  { label: "Multi-Day", icon: Map, image: tourJebelAkhdar, href: "/tours", rotation: "rotate-1" },
+  { label: "Day Trips", icon: Sun, image: tourMuscat, video: catDayTrips.url, href: "/tours", rotation: "-rotate-3" },
+  { label: "Wadi Adventures", icon: Waves, image: tourWadiShab, video: catWadi.url, href: "/tours", rotation: "rotate-2" },
+  { label: "Desert Tours", icon: Compass, image: tourWahiba, video: catDesert.url, href: "/tours", rotation: "-rotate-2" },
+  { label: "Mountain Trips", icon: Mountain, image: tourJebelShams, video: catMountain.url, href: "/tours", rotation: "rotate-3" },
+  { label: "City Tours", icon: Building, image: tourNizwa, video: catCity.url, href: "/tours", rotation: "-rotate-1" },
+  { label: "Multi-Day", icon: Map, image: tourJebelAkhdar, video: catMultiday.url, href: "/tours", rotation: "rotate-1" },
 ];
 
 const Index = () => {
@@ -136,22 +143,14 @@ const Index = () => {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
             {tourCategories.map((cat) => (
-              <Link
+              <CategoryCard
                 key={cat.label}
-                to={cat.href}
-                className={`group relative bg-card border-2 border-border/50 rounded-xl p-3 pb-4 transition-all duration-300 hover:border-accent/50 hover:shadow-xl hover:shadow-accent/10 hover:-translate-y-2 ${cat.rotation}`}
-              >
-                <div className="aspect-square rounded-lg overflow-hidden mb-3 shadow-inner">
-                  <img
-                    src={cat.image}
-                    alt={cat.label}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                </div>
-                <p className="text-center font-heading font-bold text-sm text-foreground uppercase tracking-wider">
-                  {cat.label}
-                </p>
-              </Link>
+                label={cat.label}
+                image={cat.image}
+                videoUrl={cat.video}
+                href={cat.href}
+                rotation={cat.rotation}
+              />
             ))}
           </div>
         </div>
