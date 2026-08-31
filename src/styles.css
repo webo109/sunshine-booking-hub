@@ -74,9 +74,13 @@
   --popover-foreground: oklch(0.18 0.015 250);
 
   /* Brand: warm amber/saffron, frankincense gold */
-  --primary: oklch(0.62 0.16 55);
+  /* Darkened from oklch(0.62 0.16 55) (#cc6600) for WCAG AA. That value gave
+     white-on-brand 3.73:1 and brand-text-on-background 3.54:1, both below the
+     4.5:1 minimum. oklch(0.55 0.15 50) (#b45000) gives 4.99:1 and 4.74:1 while
+     keeping the amber identity. The dark theme keeps its own lighter brand. */
+  --primary: oklch(0.55 0.15 50);
   --primary-foreground: oklch(0.99 0.005 85);
-  --brand: oklch(0.62 0.16 55);
+  --brand: oklch(0.55 0.15 50);
   --brand-foreground: oklch(0.99 0.005 85);
 
   --secondary: oklch(0.93 0.025 85);

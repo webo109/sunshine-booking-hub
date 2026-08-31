@@ -16,18 +16,21 @@ export const transports: TransportOption[] = [
     price: 0,
     vehicles: [],
   },
+  // Hotel pickup inside Muscat is free: every tour's `pickup` field says
+  // "Muscat hotels (free)" and faqs.ts (faq-019) promises free hotel pickup
+  // for all Muscat tours. Charging for it here contradicted both.
   {
     id: "city",
-    name: "City Transfer",
-    description: "Private hotel pickup within Muscat metropolitan area.",
-    price: 15,
+    name: "Hotel Pick-up & Drop-off",
+    description: "Included free from hotels across the Muscat metropolitan area.",
+    price: 0,
     vehicles: ["Saloon", "4WD", "Minibus", "Coaster"],
   },
   {
     id: "group",
     name: "Group Pick-up",
-    description: "Shared transfer ideal for groups of 6+ guests.",
-    price: 25,
+    description: "Larger vehicle for groups of 6+. Also free from Muscat hotels.",
+    price: 0,
     vehicles: ["Minibus", "Coaster", "Big Bus"],
   },
   {
