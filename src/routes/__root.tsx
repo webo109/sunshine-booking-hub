@@ -55,10 +55,22 @@ export const Route = createRootRoute({
         property: "og:description",
         content: "Private guided journeys through the Sultanate of Oman.",
       },
+      // Absolute URL required: WhatsApp/Facebook/X will not resolve a
+      // root-relative og:image, which left shared links with no preview image.
+      {
+        property: "og:image",
+        content: "https://sunshine-booking-hub.vercel.app/og-image.jpg",
+      },
+      { property: "og:image:width", content: "1920" },
+      { property: "og:image:height", content: "1080" },
+      { name: "twitter:image", content: "https://sunshine-booking-hub.vercel.app/og-image.jpg" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "stylesheet", href: appCss }],
+    links: [
+      { rel: "stylesheet", href: appCss },
+      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,

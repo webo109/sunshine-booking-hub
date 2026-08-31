@@ -1,4 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { absoluteUrl } from "@/lib/site";
 import {
   Check,
   ChevronRight,
@@ -29,8 +30,8 @@ export const Route = createFileRoute("/tours/$slug")({
           { name: "description", content: loaderData.tour.tagline },
           { property: "og:title", content: loaderData.tour.name },
           { property: "og:description", content: loaderData.tour.tagline },
-          { property: "og:image", content: loaderData.tour.image },
-          { name: "twitter:image", content: loaderData.tour.image },
+          { property: "og:image", content: absoluteUrl(loaderData.tour.image) },
+          { name: "twitter:image", content: absoluteUrl(loaderData.tour.image) },
         ]
       : [{ title: "Tour · Sunshine Tours Oman" }],
   }),
@@ -203,15 +204,13 @@ function TourDetail() {
                   className="ring-focus group relative block aspect-video w-full overflow-hidden rounded-3xl bg-obsidian shadow-xl shadow-black/10 transition-transform hover:scale-[1.01]"
                 >
                   <img
-                    src={`https://i.ytimg.com/vi/${tour.youtubeId}/maxresdefault.jpg`}
+                    /* hqdefault, not maxresdefault: YouTube serves a 120x90 grey
+                       placeholder with HTTP 200 when maxres is missing, so onError
+                       never fires and the card renders a stretched grey box. */
+                    src={`https://i.ytimg.com/vi/${tour.youtubeId}/hqdefault.jpg`}
                     alt=""
                     aria-hidden="true"
                     className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    onError={(e) => {
-                      // Fall back to hqdefault if maxresdefault is missing
-                      (e.currentTarget as HTMLImageElement).src =
-                        `https://i.ytimg.com/vi/${tour.youtubeId}/hqdefault.jpg`;
-                    }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-obsidian/85 via-obsidian/30 to-obsidian/30" />
 

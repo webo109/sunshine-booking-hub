@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { absoluteUrl } from "@/lib/site";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -20,7 +21,7 @@ export const Route = createFileRoute("/transfers")({
         content:
           "Private airport, city and group transfers across Oman in licensed sedans, 4WDs, minibuses and coaches.",
       },
-      { property: "og:image", content: shareImage },
+      { property: "og:image", content: absoluteUrl(shareImage) },
     ],
   }),
   component: TransfersPage,

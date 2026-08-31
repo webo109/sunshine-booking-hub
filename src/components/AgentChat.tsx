@@ -453,7 +453,6 @@ export function AgentChat() {
     }
   }, [messages, typing]);
 
-  // Lock background scroll on mobile when chat open
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -461,6 +460,18 @@ export function AgentChat() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  // Lock background scroll while the panel is full-screen (below md), so the
+  // page behind does not scroll away under the chat.
+  useEffect(() => {
+    if (!open) return;
+    if (!window.matchMedia("(max-width: 767px)").matches) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
   }, [open]);
 
   const send = (text: string) => {
@@ -547,10 +558,10 @@ export function AgentChat() {
         <div
           role="dialog"
           aria-label="Sunshine Tours assistant"
-          className="animate-fade-up fixed inset-x-3 bottom-[calc(9rem+env(safe-area-inset-bottom))] top-[calc(5rem+env(safe-area-inset-top))] z-50 flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-2xl shadow-black/30 md:inset-x-auto md:top-auto md:bottom-48 md:right-7 md:h-[min(70vh,560px)] md:w-[min(92vw,400px)] md:rounded-3xl"
+          className="animate-fade-up fixed inset-0 z-50 flex flex-col overflow-hidden border-border bg-card shadow-2xl shadow-black/30 md:inset-auto md:bottom-48 md:right-7 md:h-[min(70vh,560px)] md:w-[min(92vw,400px)] md:rounded-3xl md:border"
         >
           {/* Header */}
-          <div className="flex items-center gap-3 border-b border-border bg-gradient-to-br from-brand to-accent p-4 text-brand-foreground">
+          <div className="flex items-center gap-3 border-b border-border bg-gradient-to-br from-brand to-accent p-4 pt-[max(1rem,env(safe-area-inset-top))] text-brand-foreground md:pt-4">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 backdrop-blur">
               <Sparkles className="h-5 w-5" />
             </div>
@@ -597,7 +608,7 @@ export function AgentChat() {
               e.preventDefault();
               send(input);
             }}
-            className="border-t border-border bg-card p-3"
+            className="border-t border-border bg-card p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] md:pb-3"
           >
             <div className="flex items-center gap-2">
               <input

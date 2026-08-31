@@ -841,44 +841,46 @@ function BookingsView({ onOpenBooking }: { onOpenBooking: (ref: string) => void 
       </div>
 
       <div className="overflow-hidden rounded-2xl border border-border bg-card">
-        <table className="w-full text-sm">
-          <thead className="border-b border-border bg-muted/40">
-            <tr className="text-left text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-              <th className="px-4 py-3">Reference</th>
-              <th className="px-4 py-3">Customer</th>
-              <th className="px-4 py-3">Tour</th>
-              <th className="px-4 py-3">Date</th>
-              <th className="px-4 py-3">Status</th>
-              <th className="px-4 py-3 text-right">Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.map((b) => (
-              <tr
-                key={b.reference}
-                onClick={() => onOpenBooking(b.reference)}
-                className="cursor-pointer border-b border-border last:border-0 hover:bg-muted/20"
-              >
-                <td className="px-4 py-3 font-mono text-xs">{b.reference}</td>
-                <td className="px-4 py-3">
-                  <div className="font-semibold">{b.customer.name}</div>
-                  <div className="text-[11px] text-muted-foreground">
-                    {b.customer.nationality} · {b.customer.primaryLanguage}
-                  </div>
-                </td>
-                <td className="px-4 py-3">
-                  <div className="font-medium">{b.tour.name}</div>
-                  <div className="text-[11px] text-muted-foreground">{b.partySize} guests</div>
-                </td>
-                <td className="px-4 py-3 text-xs">{b.date}</td>
-                <td className="px-4 py-3">
-                  <BookingStatusBadge status={b.status} />
-                </td>
-                <td className="px-4 py-3 text-right font-mono">{formatOMR(b.total)}</td>
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[560px] text-sm">
+            <thead className="border-b border-border bg-muted/40">
+              <tr className="text-left text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+                <th className="px-4 py-3">Reference</th>
+                <th className="px-4 py-3">Customer</th>
+                <th className="px-4 py-3">Tour</th>
+                <th className="px-4 py-3">Date</th>
+                <th className="px-4 py-3">Status</th>
+                <th className="px-4 py-3 text-right">Total</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filtered.map((b) => (
+                <tr
+                  key={b.reference}
+                  onClick={() => onOpenBooking(b.reference)}
+                  className="cursor-pointer border-b border-border last:border-0 hover:bg-muted/20"
+                >
+                  <td className="px-4 py-3 font-mono text-xs">{b.reference}</td>
+                  <td className="px-4 py-3">
+                    <div className="font-semibold">{b.customer.name}</div>
+                    <div className="text-[11px] text-muted-foreground">
+                      {b.customer.nationality} · {b.customer.primaryLanguage}
+                    </div>
+                  </td>
+                  <td className="px-4 py-3">
+                    <div className="font-medium">{b.tour.name}</div>
+                    <div className="text-[11px] text-muted-foreground">{b.partySize} guests</div>
+                  </td>
+                  <td className="px-4 py-3 text-xs">{b.date}</td>
+                  <td className="px-4 py-3">
+                    <BookingStatusBadge status={b.status} />
+                  </td>
+                  <td className="px-4 py-3 text-right font-mono">{formatOMR(b.total)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
@@ -1237,43 +1239,45 @@ function BusinessView() {
           generate profit. They're not the same.
         </p>
         <div className="mt-4 overflow-hidden rounded-2xl border border-border bg-card">
-          <table className="w-full text-sm">
-            <thead className="border-b border-border bg-muted/40">
-              <tr className="text-left text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-                <th className="px-4 py-3">Tour</th>
-                <th className="px-4 py-3 text-right">Bookings</th>
-                <th className="px-4 py-3 text-right">Revenue</th>
-                <th className="px-4 py-3 text-right">Margin</th>
-                <th className="px-4 py-3">Note</th>
-              </tr>
-            </thead>
-            <tbody>
-              {marginInsights.map((m) => (
-                <tr key={m.tour} className="border-b border-border last:border-0">
-                  <td className="px-4 py-3 font-semibold">{m.tour}</td>
-                  <td className="px-4 py-3 text-right font-mono">{m.bookings}</td>
-                  <td className="px-4 py-3 text-right font-mono">{formatOMR(m.revenue)}</td>
-                  <td className="px-4 py-3 text-right">
-                    <span
-                      className={cn(
-                        "inline-flex items-center gap-1 font-mono font-bold",
-                        m.marginPct >= 35
-                          ? "text-emerald-700 dark:text-emerald-300"
-                          : m.marginPct >= 25
-                            ? "text-foreground"
-                            : "text-amber-700 dark:text-amber-300",
-                      )}
-                    >
-                      {m.trend === "up" && <ArrowUp className="h-3 w-3" />}
-                      {m.trend === "down" && <ArrowDown className="h-3 w-3" />}
-                      {m.marginPct}%
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-xs text-muted-foreground">{m.note ?? "None"}</td>
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[560px] text-sm">
+              <thead className="border-b border-border bg-muted/40">
+                <tr className="text-left text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+                  <th className="px-4 py-3">Tour</th>
+                  <th className="px-4 py-3 text-right">Bookings</th>
+                  <th className="px-4 py-3 text-right">Revenue</th>
+                  <th className="px-4 py-3 text-right">Margin</th>
+                  <th className="px-4 py-3">Note</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {marginInsights.map((m) => (
+                  <tr key={m.tour} className="border-b border-border last:border-0">
+                    <td className="px-4 py-3 font-semibold">{m.tour}</td>
+                    <td className="px-4 py-3 text-right font-mono">{m.bookings}</td>
+                    <td className="px-4 py-3 text-right font-mono">{formatOMR(m.revenue)}</td>
+                    <td className="px-4 py-3 text-right">
+                      <span
+                        className={cn(
+                          "inline-flex items-center gap-1 font-mono font-bold",
+                          m.marginPct >= 35
+                            ? "text-emerald-700 dark:text-emerald-300"
+                            : m.marginPct >= 25
+                              ? "text-foreground"
+                              : "text-amber-700 dark:text-amber-300",
+                        )}
+                      >
+                        {m.trend === "up" && <ArrowUp className="h-3 w-3" />}
+                        {m.trend === "down" && <ArrowDown className="h-3 w-3" />}
+                        {m.marginPct}%
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 text-xs text-muted-foreground">{m.note ?? "None"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </section>
 

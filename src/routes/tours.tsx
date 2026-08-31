@@ -439,87 +439,101 @@ function ToursPage() {
 
       {/* Once the full filter panel scrolls away, phones get one restrained
           toolbar in place of the navbar: search, filters, sort — nothing else. */}
-      {showFloatingButton && (
-        <>
-          <div className="fixed inset-x-0 top-16 z-40 border-b border-border bg-background/95 px-5 py-2 shadow-sm backdrop-blur-md sm:hidden">
-            <div className="mx-auto flex max-w-md items-center gap-2">
-              <div className="relative min-w-0 flex-1">
-                <Search className="pointer-events-none absolute left-3.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
-                <input
-                  type="text"
-                  value={search.q}
-                  onChange={(e) => update({ q: e.target.value })}
-                  placeholder="Search tours…"
-                  spellCheck={false}
-                  aria-label="Search tours from mobile toolbar"
-                  className="ring-focus h-10 w-full rounded-full border border-border bg-card pl-9 pr-8 text-sm text-foreground shadow-sm placeholder:text-muted-foreground/60"
-                />
-                {search.q && (
-                  <button
-                    type="button"
-                    onClick={() => update({ q: "" })}
-                    aria-label="Clear search"
-                    className="ring-focus absolute right-2 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full bg-muted text-muted-foreground transition-colors hover:bg-muted/70 hover:text-foreground"
-                  >
-                    ×
-                  </button>
-                )}
-              </div>
-              <button
-                type="button"
-                onClick={() => setDrawerOpen(true)}
-                className="ring-focus inline-flex min-h-10 shrink-0 items-center gap-1.5 rounded-full bg-brand px-3 text-xs font-bold uppercase tracking-wider text-brand-foreground shadow-sm"
-                aria-label="Open filters"
-              >
-                <SlidersHorizontal className="h-4 w-4" />
-                Filters
-                {activeFilters.length > 0 && (
-                  <span className="rounded-full bg-white/25 px-1.5 py-0.5 text-[10px] font-bold tabular-nums">
-                    {activeFilters.length}
-                  </span>
-                )}
-              </button>
-              <Select value={search.sort} onValueChange={(v) => update({ sort: v as SortValue })}>
-                <SelectTrigger
-                  aria-label="Sort tours from mobile toolbar"
-                  className="ring-focus h-10 w-auto shrink-0 justify-center gap-1 rounded-full border-border bg-card px-3 text-xs font-bold text-foreground shadow-sm"
+      <>
+        <div
+          inert={!showFloatingButton}
+          aria-hidden={!showFloatingButton}
+          className={cn(
+            "fixed inset-x-0 top-16 z-40 border-b border-border bg-background/95 px-5 py-2 shadow-sm backdrop-blur-md transition-[opacity,transform] duration-300 ease-out motion-reduce:transition-none sm:hidden",
+            showFloatingButton
+              ? "translate-y-0 opacity-100"
+              : "pointer-events-none -translate-y-2 opacity-0",
+          )}
+        >
+          <div className="mx-auto flex max-w-md items-center gap-2">
+            <div className="relative min-w-0 flex-1">
+              <Search className="pointer-events-none absolute left-3.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
+              <input
+                type="text"
+                value={search.q}
+                onChange={(e) => update({ q: e.target.value })}
+                placeholder="Search tours…"
+                spellCheck={false}
+                aria-label="Search tours from mobile toolbar"
+                className="ring-focus h-10 w-full rounded-full border border-border bg-card pl-9 pr-8 text-sm text-foreground shadow-sm placeholder:text-muted-foreground/60"
+              />
+              {search.q && (
+                <button
+                  type="button"
+                  onClick={() => update({ q: "" })}
+                  aria-label="Clear search"
+                  className="ring-focus absolute right-2 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full bg-muted text-muted-foreground transition-colors hover:bg-muted/70 hover:text-foreground"
                 >
-                  <span className="font-bold uppercase tracking-wider">Sort</span>
-                </SelectTrigger>
-                <SelectContent
-                  align="center"
-                  className="rounded-2xl border-border bg-card p-1 shadow-xl"
-                >
-                  {SORT_OPTIONS.map((opt) => (
-                    <SelectItem
-                      key={opt.value}
-                      value={opt.value}
-                      className="cursor-pointer rounded-xl py-2.5 text-sm font-medium focus:bg-brand/10 focus:text-foreground data-[state=checked]:bg-brand/15 data-[state=checked]:font-semibold data-[state=checked]:text-brand"
-                    >
-                      {opt.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                  ×
+                </button>
+              )}
             </div>
+            <button
+              type="button"
+              onClick={() => setDrawerOpen(true)}
+              className="ring-focus inline-flex min-h-10 shrink-0 items-center gap-1.5 rounded-full bg-brand px-3 text-xs font-bold uppercase tracking-wider text-brand-foreground shadow-sm"
+              aria-label="Open filters"
+            >
+              <SlidersHorizontal className="h-4 w-4" />
+              Filters
+              {activeFilters.length > 0 && (
+                <span className="rounded-full bg-white/25 px-1.5 py-0.5 text-[10px] font-bold tabular-nums">
+                  {activeFilters.length}
+                </span>
+              )}
+            </button>
+            <Select value={search.sort} onValueChange={(v) => update({ sort: v as SortValue })}>
+              <SelectTrigger
+                aria-label="Sort tours from mobile toolbar"
+                className="ring-focus h-10 w-auto shrink-0 justify-center gap-1 rounded-full border-border bg-card px-3 text-xs font-bold text-foreground shadow-sm"
+              >
+                <span className="font-bold uppercase tracking-wider">Sort</span>
+              </SelectTrigger>
+              <SelectContent
+                align="center"
+                className="rounded-2xl border-border bg-card p-1 shadow-xl"
+              >
+                {SORT_OPTIONS.map((opt) => (
+                  <SelectItem
+                    key={opt.value}
+                    value={opt.value}
+                    className="cursor-pointer rounded-xl py-2.5 text-sm font-medium focus:bg-brand/10 focus:text-foreground data-[state=checked]:bg-brand/15 data-[state=checked]:font-semibold data-[state=checked]:text-brand"
+                  >
+                    {opt.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
+        </div>
 
-          <button
-            type="button"
-            onClick={() => setDrawerOpen(true)}
-            className="ring-focus fixed bottom-5 left-5 z-40 hidden items-center gap-2 rounded-full bg-brand px-4 py-3 text-sm font-bold text-brand-foreground shadow-lg shadow-brand/30 transition-transform hover:scale-105 sm:inline-flex"
-            aria-label="Open filters"
-          >
-            <SlidersHorizontal className="h-4 w-4" />
-            <span>Filters</span>
-            {activeFilters.length > 0 && (
-              <span className="rounded-full bg-white/25 px-1.5 py-0.5 text-[10px] font-bold tabular-nums">
-                {activeFilters.length}
-              </span>
-            )}
-          </button>
-        </>
-      )}
+        <button
+          type="button"
+          onClick={() => setDrawerOpen(true)}
+          inert={!showFloatingButton}
+          aria-hidden={!showFloatingButton}
+          className={cn(
+            "ring-focus fixed bottom-5 left-5 z-40 hidden items-center gap-2 rounded-full bg-brand px-4 py-3 text-sm font-bold text-brand-foreground shadow-lg shadow-brand/30 transition-[opacity,transform] duration-300 ease-out motion-reduce:transition-none hover:scale-105 sm:inline-flex",
+            showFloatingButton
+              ? "translate-y-0 opacity-100"
+              : "pointer-events-none translate-y-2 opacity-0",
+          )}
+          aria-label="Open filters"
+        >
+          <SlidersHorizontal className="h-4 w-4" />
+          <span>Filters</span>
+          {activeFilters.length > 0 && (
+            <span className="rounded-full bg-white/25 px-1.5 py-0.5 text-[10px] font-bold tabular-nums">
+              {activeFilters.length}
+            </span>
+          )}
+        </button>
+      </>
 
       {/* More Filters drawer */}
       <MoreFiltersDrawer
