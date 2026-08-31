@@ -39,18 +39,42 @@ const PRICE_MIN = 0;
 const PRICE_MAX = 1200;
 const PRICE_STEP = 10;
 
+/**
+ * Filter defaults.
+ *
+ * These are applied in the component rather than via zod `.default()`. `/tours`
+ * is the parent route of `/tours/$slug`, so its search schema also validates the
+ * detail route; with `.default()` every tour URL was rewritten to
+ * `/tours/<slug>?q=&category=All&duration=All&region=All&difficulty=All&priceMax=1200&sort=popular`.
+ * Keeping the fields optional leaves shared links clean, and `update()` below
+ * strips any value back out of the URL once it returns to its default.
+ */
+const FILTER_DEFAULTS = {
+  q: "",
+  category: "All",
+  duration: "All",
+  region: "All",
+  difficulty: "All",
+  priceMax: PRICE_MAX,
+  sort: "popular",
+} as const;
+
 const searchSchema = z.object({
-  q: fallback(z.string(), "").default(""),
-  category: fallback(z.string(), "All").default("All"),
-  duration: fallback(z.enum(["All", "Short", "Day", "Multi"]), "All").default("All"),
-  region: fallback(z.string(), "All").default("All"),
-  difficulty: fallback(z.enum(["All", "Easy", "Moderate", "Challenging"]), "All").default("All"),
-  priceMax: fallback(z.coerce.number().int().min(0).max(PRICE_MAX), PRICE_MAX).default(PRICE_MAX),
+  q: fallback(z.string(), "").optional(),
+  category: fallback(z.string(), "All").optional(),
+  duration: fallback(z.enum(["All", "Short", "Day", "Multi"]), "All").optional(),
+  region: fallback(z.string(), "All").optional(),
+  difficulty: fallback(z.enum(["All", "Easy", "Moderate", "Challenging"]), "All").optional(),
+  priceMax: fallback(z.coerce.number().int().min(0).max(PRICE_MAX), PRICE_MAX).optional(),
   sort: fallback(
     z.enum(["popular", "price-asc", "price-desc", "duration-asc", "duration-desc"]),
     "popular",
-  ).default("popular"),
+  ).optional(),
 });
+
+type SearchParams = z.infer<typeof searchSchema>;
+/** Search params after defaults are applied - every field concrete. */
+type ResolvedSearch = Required<SearchParams>;
 
 export const Route = createFileRoute("/tours")({
   validateSearch: zodValidator(searchSchema),
@@ -154,7 +178,18 @@ function ToursPage() {
   // (Early return after all hooks, per the Rules of Hooks.)
   const hasChildRoute = useChildMatches().length > 0;
 
-  const search = Route.useSearch();
+  const rawSearch = Route.useSearch();
+  // Resolve defaults here so the rest of the component keeps working with
+  // concrete values while the URL stays free of untouched filters.
+  const search: ResolvedSearch = {
+    q: rawSearch.q ?? FILTER_DEFAULTS.q,
+    category: rawSearch.category ?? FILTER_DEFAULTS.category,
+    duration: rawSearch.duration ?? FILTER_DEFAULTS.duration,
+    region: rawSearch.region ?? FILTER_DEFAULTS.region,
+    difficulty: rawSearch.difficulty ?? FILTER_DEFAULTS.difficulty,
+    priceMax: rawSearch.priceMax ?? FILTER_DEFAULTS.priceMax,
+    sort: rawSearch.sort ?? FILTER_DEFAULTS.sort,
+  };
   const navigate = useNavigate({ from: "/tours" });
   const location = useLocation();
   const [showFloatingButton, setShowFloatingButton] = useState(false);
@@ -176,8 +211,18 @@ function ToursPage() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const update = (patch: Partial<z.infer<typeof searchSchema>>) =>
-    navigate({ search: (prev: typeof search) => ({ ...prev, ...patch }) });
+  const update = (patch: Partial<SearchParams>) =>
+    navigate({
+      search: (prev: SearchParams) => {
+        const next: SearchParams = { ...prev, ...patch };
+        // Drop any filter sitting at its default so the URL only ever carries
+        // choices the visitor actually made.
+        for (const key of Object.keys(FILTER_DEFAULTS) as Array<keyof SearchParams>) {
+          if (next[key] === FILTER_DEFAULTS[key]) delete next[key];
+        }
+        return next;
+      },
+    });
 
   const query = normalizeQuery(search.q);
 
@@ -561,14 +606,14 @@ function MoreFiltersDrawer({
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  search: z.infer<typeof searchSchema>;
+  search: ResolvedSearch;
   counts: {
     category: Record<string, number>;
     duration: Record<string, number>;
     region: Record<string, number>;
     difficulty: Record<string, number>;
   };
-  update: (patch: Partial<z.infer<typeof searchSchema>>) => void;
+  update: (patch: Partial<SearchParams>) => void;
   clearAll: () => void;
   resultCount: number;
 }) {
