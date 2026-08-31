@@ -13,7 +13,6 @@ const helpLinks = [
   { to: "/faq", label: "FAQs" },
   { to: "/contact", label: "Contact" },
   { to: "/booking-lookup", label: "Find My Booking" },
-  { to: "/admin", label: "Operator Login" },
 ] as const;
 
 const TikTokIcon = ({ className }: { className?: string }) => (

@@ -48,6 +48,7 @@ export const Route = createRootRoute({
         content:
           "Discover Oman with private guided tours through wadis, deserts, mountains and coastlines. Book trusted small-group adventures in OMR.",
       },
+      { name: "robots", content: "noindex, nofollow" },
       { name: "author", content: "Sunshine Tours Oman" },
       { property: "og:title", content: "Sunshine Tours Oman | Private Guided Adventures" },
       {

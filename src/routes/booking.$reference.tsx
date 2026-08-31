@@ -140,6 +140,16 @@ function ConfirmationPage() {
           </p>
         </div>
 
+        {/* Demo notice: this build has no backend, bookings stay in the browser */}
+        <div className="mt-5 rounded-2xl border border-amber-500/40 bg-amber-500/10 px-5 py-4 text-sm">
+          <strong className="font-semibold text-foreground">Demo preview</strong>
+          <span className="mt-1 block text-muted-foreground">
+            This booking was saved in this browser only. No message has been sent to Sunshine
+            Tours and no one has been notified. In the live version this creates a real booking
+            and alerts the operator instantly.
+          </span>
+        </div>
+
         {/* What happens next: dual-path message */}
         <div className="mt-5 flex items-start gap-3 rounded-2xl border border-border bg-brand/5 px-5 py-4 text-sm text-foreground">
           <WhatsAppIcon className="mt-0.5 h-5 w-5 shrink-0 text-[#25D366]" />
