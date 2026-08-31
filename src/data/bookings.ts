@@ -1,54 +1,70 @@
+import type { TransportId } from "./transports";
+
+export type BookingStatus = "Pending" | "Confirmed" | "Cancelled";
+
 export interface Booking {
-  id: string;
-  tourId: string;
+  reference: string;
+  tourSlug: string;
   tourName: string;
-  date: string;
+  date: string; // ISO
   adults: number;
   children: number;
-  pickupLocation: string;
-  customerName: string;
-  customerEmail: string;
-  customerPhone: string;
-  customerWhatsApp: string;
-  nationality: string;
-  totalPrice: number;
-  status: "confirmed" | "pending" | "cancelled";
+  subtotal: number;
+  transportFee: number;
+  total: number;
+  transport: {
+    id: TransportId;
+    name: string;
+    pickupAddress?: string;
+  };
+  customer: {
+    name: string;
+    email: string;
+    phone: string;
+    whatsapp?: string;
+    nationality: string;
+    notes?: string;
+  };
+  status: BookingStatus;
   createdAt: string;
-  reference: string;
 }
 
-const STORAGE_KEY = "sunshine_bookings";
+const STORAGE_KEY = "sunshine_bookings_v2";
 
-export function getBookings(): Booking[] {
+export function generateReference(): string {
+  const part = () => Math.random().toString(36).slice(2, 6).toUpperCase();
+  return `STO-${part()}${part().slice(0, 1)}`;
+}
+
+export function loadBookings(): Booking[] {
+  if (typeof window === "undefined") return [];
   try {
-    const data = localStorage.getItem(STORAGE_KEY);
-    return data ? JSON.parse(data) : [];
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    return raw ? (JSON.parse(raw) as Booking[]) : [];
   } catch {
     return [];
   }
 }
 
-export function saveBooking(booking: Booking): void {
-  const bookings = getBookings();
-  bookings.push(booking);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(bookings));
+export function saveBooking(b: Booking): void {
+  if (typeof window === "undefined") return;
+  const list = loadBookings();
+  list.unshift(b);
+  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
 }
 
-export function generateReference(): string {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  let ref = "STO-";
-  for (let i = 0; i < 6; i++) {
-    ref += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  return ref;
+export function getBookingByReference(ref: string): Booking | undefined {
+  return loadBookings().find((b) => b.reference === ref);
 }
 
-export function exportBookingsCSV(): string {
-  const bookings = getBookings();
-  const headers = ["Reference", "Tour", "Date", "Customer", "Email", "Phone", "Adults", "Children", "Total (OMR)", "Status", "Booked On"];
-  const rows = bookings.map((b) => [
-    b.reference, b.tourName, b.date, b.customerName, b.customerEmail, b.customerPhone,
-    b.adults, b.children, b.totalPrice, b.status, b.createdAt,
-  ]);
-  return [headers.join(","), ...rows.map((r) => r.join(","))].join("\n");
+export function updateBookingStatus(reference: string, status: BookingStatus): void {
+  if (typeof window === "undefined") return;
+  const list = loadBookings().map((b) => (b.reference === reference ? { ...b, status } : b));
+  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+}
+
+export function removeBooking(reference: string): void {
+  if (typeof window === "undefined") return;
+  const list = loadBookings().filter((b) => b.reference !== reference);
+  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
 }

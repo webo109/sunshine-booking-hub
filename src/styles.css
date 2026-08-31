@@ -1,0 +1,349 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: "Plus Jakarta Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Plus Jakarta Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-sand: var(--sand);
+  --color-obsidian: var(--obsidian);
+  --color-cream: var(--cream);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+/* Frankincense Cream: Light theme */
+:root {
+  --radius: 0.875rem;
+
+  --cream: oklch(0.972 0.018 85);
+  --obsidian: oklch(0.16 0.012 250);
+  --sand: oklch(0.78 0.09 60);
+
+  --background: oklch(0.972 0.018 85);
+  --foreground: oklch(0.18 0.015 250);
+
+  --card: oklch(0.99 0.008 85);
+  --card-foreground: oklch(0.18 0.015 250);
+
+  --popover: oklch(0.99 0.008 85);
+  --popover-foreground: oklch(0.18 0.015 250);
+
+  /* Brand: warm amber/saffron, frankincense gold */
+  --primary: oklch(0.62 0.16 55);
+  --primary-foreground: oklch(0.99 0.005 85);
+  --brand: oklch(0.62 0.16 55);
+  --brand-foreground: oklch(0.99 0.005 85);
+
+  --secondary: oklch(0.93 0.025 85);
+  --secondary-foreground: oklch(0.22 0.015 250);
+
+  --muted: oklch(0.93 0.022 85);
+  --muted-foreground: oklch(0.45 0.02 250);
+
+  --accent: oklch(0.55 0.13 200);
+  --accent-foreground: oklch(0.99 0.005 85);
+
+  --destructive: oklch(0.58 0.22 27);
+  --destructive-foreground: oklch(0.99 0.005 85);
+
+  --border: oklch(0.88 0.02 85);
+  --input: oklch(0.88 0.02 85);
+  --ring: oklch(0.62 0.16 55);
+
+  --chart-1: oklch(0.62 0.16 55);
+  --chart-2: oklch(0.55 0.13 200);
+  --chart-3: oklch(0.5 0.1 30);
+  --chart-4: oklch(0.7 0.12 130);
+  --chart-5: oklch(0.45 0.15 280);
+
+  --sidebar: oklch(0.96 0.012 85);
+  --sidebar-foreground: oklch(0.18 0.015 250);
+  --sidebar-primary: oklch(0.62 0.16 55);
+  --sidebar-primary-foreground: oklch(0.99 0.005 85);
+  --sidebar-accent: oklch(0.93 0.022 85);
+  --sidebar-accent-foreground: oklch(0.22 0.015 250);
+  --sidebar-border: oklch(0.88 0.02 85);
+  --sidebar-ring: oklch(0.62 0.16 55);
+}
+
+/* Deep Obsidian: Dark theme */
+.dark {
+  --background: oklch(0.14 0.012 250);
+  --foreground: oklch(0.96 0.012 85);
+
+  --card: oklch(0.19 0.014 250);
+  --card-foreground: oklch(0.96 0.012 85);
+
+  --popover: oklch(0.19 0.014 250);
+  --popover-foreground: oklch(0.96 0.012 85);
+
+  --primary: oklch(0.74 0.16 60);
+  --primary-foreground: oklch(0.14 0.012 250);
+  --brand: oklch(0.74 0.16 60);
+  --brand-foreground: oklch(0.14 0.012 250);
+
+  --secondary: oklch(0.24 0.015 250);
+  --secondary-foreground: oklch(0.96 0.012 85);
+
+  --muted: oklch(0.22 0.014 250);
+  --muted-foreground: oklch(0.7 0.02 85);
+
+  --accent: oklch(0.65 0.13 200);
+  --accent-foreground: oklch(0.14 0.012 250);
+
+  --destructive: oklch(0.65 0.21 27);
+  --destructive-foreground: oklch(0.14 0.012 250);
+
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.74 0.16 60);
+
+  --sidebar: oklch(0.16 0.012 250);
+  --sidebar-foreground: oklch(0.96 0.012 85);
+  --sidebar-primary: oklch(0.74 0.16 60);
+  --sidebar-primary-foreground: oklch(0.14 0.012 250);
+  --sidebar-accent: oklch(0.22 0.014 250);
+  --sidebar-accent-foreground: oklch(0.96 0.012 85);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.74 0.16 60);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Always reserve the scrollbar gutter. Opening a dialog/sheet scroll-locks
+       the body (overflow: hidden), which removes the scrollbar and widens the
+       viewport — shifting `fixed` elements like the navbar sideways. Reserving
+       the gutter permanently keeps the width constant, so nothing jumps. */
+    scrollbar-gutter: stable;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* react-remove-scroll (behind Radix Sheet/Dialog) pads the body to make up
+     for the scrollbar it removes while locked. `scrollbar-gutter: stable`
+     above already keeps that width reserved, so this padding is double
+     compensation and shifts the page sideways. Cancel it — the two fixes only
+     work as a pair. */
+  body[data-scroll-locked] {
+    padding-right: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.025em;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .gradient-overlay {
+    background: linear-gradient(
+      90deg,
+      oklch(0.1 0.02 250 / 0.85) 0%,
+      oklch(0.1 0.02 250 / 0.55) 45%,
+      oklch(0.1 0.02 250 / 0.15) 75%,
+      oklch(0.1 0.02 250 / 0.4) 100%
+    );
+  }
+
+  .gradient-bottom {
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      oklch(0.1 0.02 250 / 0.4) 70%,
+      oklch(0.1 0.02 250 / 0.85) 100%
+    );
+  }
+
+  /* Keep the gallery heading crisp while allowing the photo columns to remain
+     clearly visible around it. The top band also prevents the glass navbar
+     from sampling a patchwork of images. */
+  .hero-mosaic-scrim {
+    background:
+      linear-gradient(
+        to bottom,
+        var(--obsidian) 0,
+        var(--obsidian) 84px,
+        oklch(0.16 0.012 250 / 0) 210px
+      ),
+      radial-gradient(
+        ellipse 94% 84% at 50% 50%,
+        var(--obsidian) 0%,
+        oklch(0.16 0.012 250 / 0.95) 46%,
+        oklch(0.16 0.012 250 / 0.62) 74%,
+        oklch(0.16 0.012 250 / 0) 100%
+      ),
+      linear-gradient(oklch(0.16 0.012 250 / 0.55), oklch(0.16 0.012 250 / 0.55));
+  }
+
+  @media (min-width: 768px) {
+    .hero-mosaic-scrim {
+      background:
+        linear-gradient(
+          to bottom,
+          var(--obsidian) 0,
+          var(--obsidian) 88px,
+          oklch(0.16 0.012 250 / 0) 230px
+        ),
+        radial-gradient(
+          ellipse 56% 80% at 50% 50%,
+          var(--obsidian) 0%,
+          oklch(0.16 0.012 250 / 0.94) 44%,
+          oklch(0.16 0.012 250 / 0.55) 72%,
+          oklch(0.16 0.012 250 / 0) 100%
+        ),
+        linear-gradient(oklch(0.16 0.012 250 / 0.42), oklch(0.16 0.012 250 / 0.42));
+    }
+  }
+
+  .glass {
+    background: color-mix(in oklch, var(--background) 60%, transparent);
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+  }
+
+  .glass-dark {
+    background: color-mix(in oklch, oklch(0.1 0.02 250) 50%, transparent);
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+  }
+
+  .ring-focus {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+  }
+
+  .hover-lift {
+    transition:
+      transform 400ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 400ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .hover-lift:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 30px 60px -20px oklch(0.1 0.02 250 / 0.4);
+  }
+
+  .text-stroke-thin {
+    -webkit-text-stroke: 1px color-mix(in oklch, currentColor 40%, transparent);
+    color: transparent;
+  }
+}
+
+@keyframes slow-zoom {
+  from {
+    transform: scale(1.05);
+  }
+  to {
+    transform: scale(1.18);
+  }
+}
+.animate-slow-zoom {
+  animation: slow-zoom 20s ease-out infinite alternate;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-up {
+  animation: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes mosaic-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -3.5rem, 0);
+  }
+}
+.animate-mosaic-drift {
+  animation: mosaic-drift 26s ease-in-out infinite alternate;
+}
+.animate-mosaic-drift-slow {
+  animation: mosaic-drift 34s ease-in-out infinite alternate-reverse;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

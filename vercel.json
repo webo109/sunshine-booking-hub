@@ -1,0 +1,11 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "tanstack-start",
+  "redirects": [
+    {
+      "source": "/:path*",
+      "destination": "https://sunshine-tours-oman.sunshine-tours-oman.workers.dev/:path*",
+      "permanent": true
+    }
+  ]
+}
