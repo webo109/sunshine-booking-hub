@@ -62,8 +62,7 @@ const photos: Photo[] = [
   },
   {
     src: muscat,
-    caption:
-      "The main prayer hall of the Sultan Qaboos Grand Mosque, in Omani sandstone and Italian marble.",
+    caption: "Muscat's mosque architecture at dusk, a fixture of the private city tour.",
     region: "Muscat",
     category: "City",
     span: "square",
@@ -92,40 +91,6 @@ const photos: Photo[] = [
     category: "Heritage",
     span: "tall",
     tourSlug: "misfat-heritage",
-  },
-  {
-    src: jebelShams,
-    caption:
-      "The Balcony Walk traces the canyon rim for three hours, past abandoned cliffside villages.",
-    region: "Ad Dakhiliyah",
-    category: "Mountain",
-    span: "square",
-    tourSlug: "jebel-shams-grand-canyon",
-  },
-  {
-    src: wadiShab,
-    caption: "The hidden waterfall inside the cave you swim into at the end of the wadi.",
-    region: "Ash Sharqiyah",
-    category: "Wadi",
-    span: "wide",
-    tourSlug: "wadi-shab-emerald-pools",
-  },
-  {
-    src: heroDesert,
-    caption: "The Milky Way overhead at the Bedouin camp, with no light pollution for 100 km.",
-    region: "Ash Sharqiyah",
-    category: "Desert",
-    span: "wide",
-    tourSlug: "wahiba-sands-overnight",
-  },
-  {
-    src: salalah,
-    caption:
-      "A wild Boswellia tree near Wadi Dawkah, the source of the world's most sought-after frankincense.",
-    region: "Dhofar",
-    category: "Heritage",
-    span: "wide",
-    tourSlug: "al-luban-frankincense-trail",
   },
 ];
 

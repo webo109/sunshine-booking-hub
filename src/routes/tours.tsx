@@ -7,7 +7,7 @@ import {
 } from "@tanstack/react-router";
 import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { z } from "zod";
-import { Check, MessageCircle, Search, SlidersHorizontal, X } from "lucide-react";
+import { Check, Search, SlidersHorizontal, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { tours, categories, type Tour } from "@/data/tours";
 import { TourListCard } from "@/components/TourListCard";
@@ -438,15 +438,37 @@ function ToursPage() {
       </div>
 
       {/* Once the full filter panel scrolls away, phones get one restrained
-          toolbar below the navbar instead of three bubbles over the cards. */}
+          toolbar in place of the navbar: search, filters, sort — nothing else. */}
       {showFloatingButton && (
         <>
-          <div className="fixed inset-x-0 top-0 z-30 border-y border-border bg-background/95 px-5 py-2 shadow-sm backdrop-blur-md sm:hidden">
+          <div className="fixed inset-x-0 top-16 z-40 border-b border-border bg-background/95 px-5 py-2 shadow-sm backdrop-blur-md sm:hidden">
             <div className="mx-auto flex max-w-md items-center gap-2">
+              <div className="relative min-w-0 flex-1">
+                <Search className="pointer-events-none absolute left-3.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
+                <input
+                  type="text"
+                  value={search.q}
+                  onChange={(e) => update({ q: e.target.value })}
+                  placeholder="Search tours…"
+                  spellCheck={false}
+                  aria-label="Search tours from mobile toolbar"
+                  className="ring-focus h-10 w-full rounded-full border border-border bg-card pl-9 pr-8 text-sm text-foreground shadow-sm placeholder:text-muted-foreground/60"
+                />
+                {search.q && (
+                  <button
+                    type="button"
+                    onClick={() => update({ q: "" })}
+                    aria-label="Clear search"
+                    className="ring-focus absolute right-2 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full bg-muted text-muted-foreground transition-colors hover:bg-muted/70 hover:text-foreground"
+                  >
+                    ×
+                  </button>
+                )}
+              </div>
               <button
                 type="button"
                 onClick={() => setDrawerOpen(true)}
-                className="ring-focus inline-flex min-h-10 items-center gap-2 rounded-full bg-brand px-4 text-xs font-bold uppercase tracking-wider text-brand-foreground shadow-sm"
+                className="ring-focus inline-flex min-h-10 shrink-0 items-center gap-1.5 rounded-full bg-brand px-3 text-xs font-bold uppercase tracking-wider text-brand-foreground shadow-sm"
                 aria-label="Open filters"
               >
                 <SlidersHorizontal className="h-4 w-4" />
@@ -460,7 +482,7 @@ function ToursPage() {
               <Select value={search.sort} onValueChange={(v) => update({ sort: v as SortValue })}>
                 <SelectTrigger
                   aria-label="Sort tours from mobile toolbar"
-                  className="ring-focus h-10 min-w-0 flex-1 justify-center gap-1 rounded-full border-border bg-card px-3 text-xs font-bold text-foreground shadow-sm"
+                  className="ring-focus h-10 w-auto shrink-0 justify-center gap-1 rounded-full border-border bg-card px-3 text-xs font-bold text-foreground shadow-sm"
                 >
                   <span className="font-bold uppercase tracking-wider">Sort</span>
                 </SelectTrigger>
@@ -479,15 +501,6 @@ function ToursPage() {
                   ))}
                 </SelectContent>
               </Select>
-              <button
-                type="button"
-                onClick={() => window.dispatchEvent(new Event("sunshine:open-chat"))}
-                className="ring-focus inline-flex min-h-10 items-center gap-2 rounded-full border border-border bg-card px-4 text-xs font-bold uppercase tracking-wider text-foreground shadow-sm"
-                aria-label="Open tour help"
-              >
-                <MessageCircle className="h-4 w-4 text-brand" />
-                Help
-              </button>
             </div>
           </div>
 
@@ -559,11 +572,13 @@ function MoreFiltersDrawer({
         side="right"
         aria-describedby={undefined}
         className={cn(
-          // Compact floating panel: anchored below the navbar, height driven by
-          // its own content (scrolls internally only if it outgrows the viewport)
-          // rather than the full-height takeover this used to be.
-          "bottom-auto right-4 top-24 h-auto max-h-[calc(100dvh-8rem)] w-[320px] max-w-[calc(100vw-2rem)]",
-          "flex flex-col overflow-hidden rounded-3xl border border-border bg-background p-0 shadow-2xl",
+          // Phones: full-screen sheet — filters get the whole viewport.
+          "inset-0 h-[100dvh] w-auto max-w-none rounded-none border-0",
+          // sm and up: compact floating panel anchored below the navbar, height
+          // driven by its own content (scrolls internally only if it outgrows
+          // the viewport) rather than the full-height takeover this used to be.
+          "sm:inset-auto sm:bottom-auto sm:right-4 sm:top-24 sm:h-auto sm:max-h-[calc(100dvh-8rem)] sm:w-[320px] sm:max-w-[calc(100vw-2rem)]",
+          "flex flex-col overflow-hidden bg-background p-0 shadow-2xl sm:rounded-3xl sm:border sm:border-border",
           // Close affordance lives in the header row, matching the design
           "[&>button]:hidden",
           // Tailwind 4 + tailwindcss-animate's `slide-in-from-right` doesn't
@@ -574,39 +589,36 @@ function MoreFiltersDrawer({
         )}
         style={{ transition: "transform 300ms ease-in-out" }}
       >
-        <SheetHeader className="flex-row items-center justify-between space-y-0 px-5 pb-1 pt-5">
+        <SheetHeader className="flex-row items-center justify-between space-y-0 px-5 pb-1 pt-[max(1.25rem,env(safe-area-inset-top))] sm:pt-5">
           <SheetTitle className="font-display text-base font-black uppercase tracking-wider">
             Filters
           </SheetTitle>
-          <button
-            type="button"
-            onClick={clearAll}
-            disabled={!anyActive}
-            className={cn(
-              "ring-focus rounded-md text-xs font-medium transition-colors",
-              anyActive
-                ? "text-muted-foreground hover:text-brand"
-                : "cursor-not-allowed text-muted-foreground/40",
-            )}
-          >
-            Clear all
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={clearAll}
+              disabled={!anyActive}
+              className={cn(
+                "ring-focus rounded-md text-xs font-medium transition-colors",
+                anyActive
+                  ? "text-muted-foreground hover:text-brand"
+                  : "cursor-not-allowed text-muted-foreground/40",
+              )}
+            >
+              Clear all
+            </button>
+            <button
+              type="button"
+              onClick={() => onOpenChange(false)}
+              aria-label="Close filters"
+              className="ring-focus flex h-9 w-9 items-center justify-center rounded-full bg-muted text-foreground transition-colors hover:bg-muted/70 sm:hidden"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
         </SheetHeader>
 
         <div className="flex-1 space-y-5 overflow-y-auto px-5 pb-6 pt-4">
-          {/* Search */}
-          <div className="relative">
-            <Search className="pointer-events-none absolute left-3.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
-            <input
-              type="text"
-              value={search.q}
-              onChange={(e) => update({ q: e.target.value })}
-              placeholder="Search tours…"
-              spellCheck={false}
-              className="ring-focus w-full rounded-full border border-border bg-card py-2 pl-9 pr-3 text-sm text-foreground placeholder:text-muted-foreground/60"
-            />
-          </div>
-
           {/* Category */}
           <PanelSection title="Category">
             <CheckList
@@ -653,7 +665,7 @@ function MoreFiltersDrawer({
           </PanelSection>
         </div>
 
-        <SheetFooter className="border-t border-border/60 px-5 py-3">
+        <SheetFooter className="border-t border-border/60 px-5 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3">
           <button
             type="button"
             onClick={() => onOpenChange(false)}

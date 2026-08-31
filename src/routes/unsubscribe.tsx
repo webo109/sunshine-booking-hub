@@ -40,7 +40,6 @@ function UnsubscribePage() {
       handleUnsubscribe(queryEmail, true);
       setProcessed(true);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryEmail, processed]);
 
   const handleUnsubscribe = (input: string, silent = false) => {

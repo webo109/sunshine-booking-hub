@@ -100,9 +100,7 @@ function ConfirmationPage() {
             />
             <Row label="Tour" value={<span className="font-semibold">{booking.tourName}</span>} />
             <Row label={isMultiDay ? "Trip dates" : "Date"} value={dateSpan} />
-            {isMultiDay && bookedTour && (
-              <Row label="Duration" value={bookedTour.durationLabel} />
-            )}
+            {isMultiDay && bookedTour && <Row label="Duration" value={bookedTour.durationLabel} />}
             <Row label="Guests" value={guestSummary} />
             <Row label="Transport" value={booking.transport.name} />
             <Row
@@ -144,9 +142,9 @@ function ConfirmationPage() {
         <div className="mt-5 rounded-2xl border border-amber-500/40 bg-amber-500/10 px-5 py-4 text-sm">
           <strong className="font-semibold text-foreground">Demo preview</strong>
           <span className="mt-1 block text-muted-foreground">
-            This booking was saved in this browser only. No message has been sent to Sunshine
-            Tours and no one has been notified. In the live version this creates a real booking
-            and alerts the operator instantly.
+            This booking was saved in this browser only. No message has been sent to Sunshine Tours
+            and no one has been notified. In the live version this creates a real booking and alerts
+            the operator instantly.
           </span>
         </div>
 

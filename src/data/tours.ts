@@ -33,6 +33,8 @@ export interface Tour {
   adultPrice: number;
   childPrice: number;
   priceOnRequest?: boolean;
+  /** Tour runs on Fridays, overriding the default Friday blackout. */
+  allowFriday?: boolean;
   youtubeId?: string;
   highlights: string[];
   inclusions: string[];
@@ -378,6 +380,7 @@ export const tours: Tour[] = [
   {
     id: "t-007",
     slug: "nizwa-friday-souq",
+    allowFriday: true,
     name: "Nizwa Friday Goat Souq & Fort",
     shortName: "Nizwa Souq",
     region: "Ad Dakhiliyah",

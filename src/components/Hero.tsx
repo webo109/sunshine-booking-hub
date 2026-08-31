@@ -13,16 +13,19 @@ const slideBadges = [
   "Seasonal Dhofar Escape",
 ] as const;
 
-const slides = tours.slice(0, 5).map((t) => ({
-  slug: t.slug,
-  title: t.shortName.toUpperCase(),
-  caption: `${t.shortName}, ${t.region}`,
-  description: t.description,
-  image: t.image,
-})).map((slide, i) => ({
-  ...slide,
-  badge: slideBadges[i] ?? "Featured Oman Tour",
-}));
+const slides = tours
+  .slice(0, 5)
+  .map((t) => ({
+    slug: t.slug,
+    title: t.shortName.toUpperCase(),
+    caption: `${t.shortName}, ${t.region}`,
+    description: t.description,
+    image: t.image,
+  }))
+  .map((slide, i) => ({
+    ...slide,
+    badge: slideBadges[i] ?? "Featured Oman Tour",
+  }));
 
 export function Hero() {
   const [active, setActive] = useState(0);
@@ -44,7 +47,7 @@ export function Hero() {
   const current = slides[active];
 
   return (
-    <section className="relative min-h-[760px] w-full overflow-hidden bg-obsidian text-white md:h-screen md:min-h-[680px]">
+    <section className="relative min-h-[840px] w-full overflow-hidden bg-obsidian text-white md:h-screen md:min-h-[680px]">
       {/* Background full-bleed image with slow zoom + crossfade */}
       {slides.map((s, i) => (
         <img
@@ -81,23 +84,23 @@ export function Hero() {
       </div>
 
       {/* Content grid */}
-      <div className="relative z-10 mx-auto grid min-h-[760px] max-w-7xl grid-cols-1 items-start gap-7 px-5 pb-10 pt-24 md:h-full md:min-h-0 md:grid-cols-12 md:items-center md:gap-8 md:px-8 md:pb-10 md:pt-28">
+      <div className="relative z-10 mx-auto grid min-h-[840px] max-w-7xl grid-cols-1 items-start gap-7 px-5 pb-10 pt-24 md:h-full md:min-h-0 md:grid-cols-12 md:items-center md:gap-8 md:px-8 md:pb-10 md:pt-28">
         {/* Left: copy */}
         <div key={`copy-${animKey}`} className="md:col-span-6 lg:col-span-7">
           <div className="animate-fade-up">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1 text-[11px] uppercase tracking-[0.22em] text-white/80 backdrop-blur">
-              <span className="h-1.5 w-1.5 rounded-full bg-brand" />
-              {current.badge}
+            <span className="inline-flex max-w-full items-center gap-2 whitespace-nowrap rounded-full border border-white/20 bg-white/5 px-3 py-1 text-[11px] uppercase tracking-[0.22em] text-white/80 backdrop-blur">
+              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-brand" />
+              <span className="truncate">{current.badge}</span>
             </span>
           </div>
           <h1
-            className="mt-5 font-display text-[13vw] font-black uppercase leading-[0.9] tracking-tight text-balance sm:text-[4.4rem] md:mt-6 md:text-7xl md:leading-[0.88] lg:text-[8.5rem] xl:text-[10rem]"
+            className="mt-5 line-clamp-2 min-h-[1.8em] font-display text-[13vw] font-black uppercase leading-[0.9] tracking-tight text-balance sm:text-[4.4rem] md:mt-6 md:min-h-[1.76em] md:text-7xl md:leading-[0.88] lg:text-[8.5rem] xl:text-[10rem]"
             style={{ animation: "fade-up 0.9s cubic-bezier(0.22,1,0.36,1) both" }}
           >
             {current.title}
           </h1>
           <p
-            className="mt-6 max-w-xl text-sm leading-relaxed text-white/80 md:text-base"
+            className="mt-6 line-clamp-4 max-w-xl text-sm leading-relaxed text-white/80 md:text-base"
             style={{ animation: "fade-up 0.9s 0.15s cubic-bezier(0.22,1,0.36,1) both" }}
           >
             {current.description}

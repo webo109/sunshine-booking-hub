@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Award, Phone, Mail, MapPin, Users, Globe, Star, Compass, ArrowRight } from "lucide-react";
+import { Phone, Mail, MapPin, Users, Globe, Star, Compass, ArrowRight } from "lucide-react";
 import { TripAdvisorReviews } from "@/components/TripAdvisorReviews";
 
 export const Route = createFileRoute("/about")({
@@ -23,24 +23,12 @@ const teamMembers = [
   { name: "Roda Valdez", role: "Marketing", initials: "RV" },
 ];
 
-const awards = [
-  { title: "Certificate of Excellence", year: "2017" },
-  { title: "Certificate of Excellence", year: "2018" },
-  { title: "Certificate of Excellence", year: "2019" },
-  { title: "Travellers' Choice", year: "2020" },
-  { title: "Travellers' Choice", year: "2021" },
-  { title: "Travellers' Choice", year: "2022" },
-  { title: "Travellers' Choice", year: "2023" },
-];
-
-// Hero proof row. Every figure traces to data already on the site: the awards
-// array below, the "Since 2014" story card, the languages our guides speak, and
-// the Tripadvisor summary in TrustBadges/TripAdvisorReviews.
+// Hero proof row. Only non-numeric, verifiable facts here. Ratings, review
+// counts and award history must come from the operator's own dashboards.
 const stats = [
-  { value: "2014", label: "Founded", detail: "Muscat, Oman" },
-  { value: String(awards.length), label: "Tripadvisor awards", detail: "2017 – 2023" },
+  { value: "Muscat", label: "Based in", detail: "Sultanate of Oman" },
   { value: "5", label: "Languages", detail: "EN · IT · FR · DE · ES" },
-  { value: "4.9", label: "Tripadvisor rating", detail: "Travellers' Choice", star: true },
+  { value: "Private", label: "Tours", detail: "Your group only" },
 ];
 
 const steps = [
@@ -114,14 +102,11 @@ function AboutPage() {
           </p>
 
           <div className="mx-auto mt-12 max-w-3xl border-t border-white/10 pt-8 md:mt-14">
-            <div className="grid grid-cols-2 gap-8 sm:grid-cols-4 sm:gap-0 sm:divide-x sm:divide-white/10">
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-3 sm:gap-0 sm:divide-x sm:divide-white/10">
               {stats.map((stat) => (
                 <div key={stat.label} className="px-2 sm:px-4">
                   <p className="font-display flex items-center justify-center gap-1.5 text-3xl font-black md:text-4xl">
                     {stat.value}
-                    {stat.star && (
-                      <Star className="h-5 w-5 fill-primary text-primary md:h-6 md:w-6" />
-                    )}
                   </p>
                   <p className="mt-2 text-[11px] font-semibold tracking-[0.18em] text-white/60 uppercase">
                     {stat.label}
@@ -284,40 +269,7 @@ function AboutPage() {
         </div>
       </section>
 
-      {/* Awards */}
-      <section className="bg-background pt-10 pb-16 md:pt-12 md:pb-24">
-        <div className="mx-auto max-w-7xl px-5 md:px-8">
-          <h2 className="font-display mb-12 text-center text-3xl font-black tracking-tight md:text-5xl">
-            Awards & <span className="text-primary">Recognition</span>
-          </h2>
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
-            {awards.map((award, i) => (
-              <div
-                key={award.year}
-                className={`rounded-xl border border-border bg-card p-4 text-center transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 ${
-                  i % 2 === 0 ? "-rotate-1" : "rotate-1"
-                } hover:rotate-0`}
-              >
-                <Award className="mx-auto mb-2 h-8 w-8 text-primary" />
-                <p className="text-xs text-muted-foreground">Tripadvisor</p>
-                <p className="text-sm font-semibold text-primary">{award.title}</p>
-                <p className="font-display mt-1 text-2xl font-black">{award.year}</p>
-                <p className="mt-1 text-xs text-muted-foreground">Sunshine Tours Oman</p>
-                <div className="mt-1 flex justify-center gap-0.5">
-                  {[...Array(5)].map((_, j) => (
-                    <span key={j} className="text-xs text-primary">
-                      ●
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Live Tripadvisor reviews — the awards row above is historical, this is
-          the current rating and what travellers said most recently. */}
+      {/* Live Tripadvisor reviews, linked out to the operator's public page. */}
       <TripAdvisorReviews />
 
       {/* Team */}

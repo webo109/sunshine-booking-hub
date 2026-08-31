@@ -24,7 +24,7 @@ import {
   formatOMR,
   formatDate,
   formatDateRange,
-  isFridayOrPast,
+  isUnavailable,
   tripDays,
   tripEndDate,
 } from "@/lib/format";
@@ -85,8 +85,8 @@ const daysFromToday = (d: Date) => {
   return Math.round((target.getTime() - today.getTime()) / 86400000);
 };
 
-const skipFriday = (d: Date) => {
-  if (d.getDay() === 5) d.setDate(d.getDate() + 1);
+const skipFriday = (d: Date, allowFriday = false) => {
+  if (!allowFriday && d.getDay() === 5) d.setDate(d.getDate() + 1);
   return d;
 };
 
@@ -96,13 +96,13 @@ const sameDay = (a: Date | undefined, b: Date) =>
   a.getMonth() === b.getMonth() &&
   a.getDate() === b.getDate();
 
-const quickPicks: Array<{ label: string; compute: () => Date }> = [
+const quickPicks: Array<{ label: string; compute: (allowFriday: boolean) => Date }> = [
   {
     label: "Tomorrow",
-    compute: () => {
+    compute: (allowFriday) => {
       const d = new Date();
       d.setDate(d.getDate() + 1);
-      return skipFriday(d);
+      return skipFriday(d, allowFriday);
     },
   },
   {
@@ -117,18 +117,18 @@ const quickPicks: Array<{ label: string; compute: () => Date }> = [
   },
   {
     label: "In 2 weeks",
-    compute: () => {
+    compute: (allowFriday) => {
       const d = new Date();
       d.setDate(d.getDate() + 14);
-      return skipFriday(d);
+      return skipFriday(d, allowFriday);
     },
   },
   {
     label: "Next month",
-    compute: () => {
+    compute: (allowFriday) => {
       const d = new Date();
       d.setMonth(d.getMonth() + 1);
-      return skipFriday(d);
+      return skipFriday(d, allowFriday);
     },
   },
 ];
@@ -315,7 +315,9 @@ function BookingWizard() {
                 <CalendarIcon className="h-5 w-5 text-brand" /> Select Your Date
               </h2>
               <p className="mt-1 text-xs text-muted-foreground">
-                Fridays and past dates are unavailable.
+                {tour.allowFriday
+                  ? "Past dates are unavailable. This tour runs on Fridays."
+                  : "Fridays and past dates are unavailable."}
               </p>
 
               {/* Quick-pick chips */}
@@ -324,7 +326,7 @@ function BookingWizard() {
                   Quick pick:
                 </span>
                 {quickPicks.map((qp) => {
-                  const computed = qp.compute();
+                  const computed = qp.compute(!!tour.allowFriday);
                   const active = sameDay(date, computed);
                   return (
                     <button
@@ -350,7 +352,7 @@ function BookingWizard() {
                     mode="single"
                     selected={date}
                     onSelect={setDate}
-                    disabled={isFridayOrPast}
+                    disabled={(d: Date) => isUnavailable(d, !!tour.allowFriday)}
                     initialFocus
                     /* Tint the nights after departure so a multi-day trip is
                        visible on the calendar itself, not just in the panel.

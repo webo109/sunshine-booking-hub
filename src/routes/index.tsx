@@ -14,7 +14,6 @@ import { Hero } from "@/components/Hero";
 import { TourCard } from "@/components/TourCard";
 import { Testimonials } from "@/components/Testimonials";
 import { TripAdvisorReviews } from "@/components/TripAdvisorReviews";
-import { TrustBadges } from "@/components/TrustBadges";
 import { Newsletter } from "@/components/Newsletter";
 import { tours } from "@/data/tours";
 
@@ -34,9 +33,9 @@ export const Route = createFileRoute("/")({
 
 const features = [
   { icon: ShieldCheck, label: "Licensed Guides", desc: "Government-certified Omani guides." },
-  { icon: Star, label: "5-Star Rated", desc: "Trusted by 4,200+ travellers." },
-  { icon: Globe2, label: "40+ Countries", desc: "Hosting visitors from worldwide." },
-  { icon: Award, label: "10 Years", desc: "Operating since 2014." },
+  { icon: Star, label: "Private Tours", desc: "Your group only, never shared." },
+  { icon: Globe2, label: "5 Languages", desc: "EN · IT · FR · DE · ES" },
+  { icon: Award, label: "Local Experts", desc: "Muscat-based, Oman-wide." },
 ];
 
 const promises = [
@@ -63,8 +62,6 @@ function HomePage() {
   return (
     <>
       <Hero />
-
-      <TrustBadges />
 
       {/* Trust strip */}
       <section className="border-y border-border bg-muted/60 py-12 dark:bg-muted/30 md:py-14">

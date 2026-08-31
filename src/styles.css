@@ -265,18 +265,6 @@
     }
   }
 
-  .glass {
-    background: color-mix(in oklch, var(--background) 60%, transparent);
-    backdrop-filter: blur(14px) saturate(160%);
-    -webkit-backdrop-filter: blur(14px) saturate(160%);
-  }
-
-  .glass-dark {
-    background: color-mix(in oklch, oklch(0.1 0.02 250) 50%, transparent);
-    backdrop-filter: blur(14px) saturate(160%);
-    -webkit-backdrop-filter: blur(14px) saturate(160%);
-  }
-
   .ring-focus {
     @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background;
   }
@@ -346,4 +334,29 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Frosted-glass surfaces.
+   Declared outside @layer utilities on purpose: inside the layer, Tailwind v4's
+   build dropped both backdrop-filter declarations, leaving the navbar, mobile
+   menu and tour CTA bar fully transparent in production. Keep the -webkit-
+   prefix in a separate rule so neither declaration can be deduped away. */
+.glass {
+  background: color-mix(in oklch, var(--background) 60%, transparent);
+}
+.glass {
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+}
+.glass {
+  backdrop-filter: blur(14px) saturate(160%);
+}
+
+.glass-dark {
+  background: color-mix(in oklch, oklch(0.1 0.02 250) 50%, transparent);
+}
+.glass-dark {
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+}
+.glass-dark {
+  backdrop-filter: blur(14px) saturate(160%);
 }

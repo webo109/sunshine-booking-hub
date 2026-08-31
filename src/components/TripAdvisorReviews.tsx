@@ -6,13 +6,6 @@ import { testimonials } from "@/data/testimonials";
 const TRIPADVISOR_URL =
   "https://www.tripadvisor.com/Attraction_Review-g1940497-d8617192-Reviews-Sunshine_Tours_Oman-Muscat_Muscat_Governorate.html";
 
-// Owner-supplied placeholders, Nova edits these from the live Tripadvisor page.
-const SUMMARY = {
-  rating: "4.9",
-  reviewCount: "247",
-  award: "Travellers' Choice",
-};
-
 export function TripAdvisorReviews() {
   const filled = useMemo(
     () => testimonials.filter((t) => t.quote.trim().length > 0).slice(0, 3),
@@ -65,37 +58,17 @@ export function TripAdvisorReviews() {
         </div>
 
         <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
-          {/* Rating summary card */}
+          {/* Link-out card. No rating shown until the real figures are supplied. */}
           <div className="rounded-3xl border border-border bg-card p-6 shadow-sm">
             <div className="text-[10px] font-bold uppercase tracking-widest text-emerald-700 dark:text-emerald-300">
-              Tripadvisor rating
+              Independently reviewed
             </div>
-            <div className="mt-3 flex items-baseline gap-1.5">
-              <span className="font-display text-5xl font-black text-foreground">
-                {SUMMARY.rating}
-              </span>
-              <span className="text-sm font-semibold text-muted-foreground">/ 5</span>
+            <div className="mt-3 flex items-center gap-1">
+              <Star className="h-6 w-6 fill-emerald-500 text-emerald-500" strokeWidth={1.5} />
             </div>
-            <div className="mt-2 flex items-center gap-1">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <Star
-                  key={i}
-                  className="h-4 w-4 fill-emerald-500 text-emerald-500"
-                  strokeWidth={1.5}
-                />
-              ))}
-            </div>
-            <div className="mt-3 text-xs text-muted-foreground">
-              Based on {SUMMARY.reviewCount} verified reviews
-            </div>
-            <div className="mt-5 inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-3 py-1.5 text-[11px] font-bold uppercase tracking-widest text-emerald-700 dark:text-emerald-300">
-              <Star className="h-3 w-3 fill-current" />
-              {SUMMARY.award}
-            </div>
-            <p className="mt-5 text-xs leading-relaxed text-muted-foreground">
-              {hasQuotes
-                ? "Pulled from the operator's public Tripadvisor page. Click any review to read the full text on Tripadvisor."
-                : "Pulled from the operator's public Tripadvisor page, where the full review history is independently hosted."}
+            <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+              Every review is public and independently hosted on Tripadvisor, where the full history
+              can be read in full.
             </p>
           </div>
 
@@ -112,11 +85,10 @@ export function TripAdvisorReviews() {
                 strokeWidth={1.5}
               />
               <p className="mt-4 font-display text-xl font-bold text-foreground md:text-2xl">
-                {SUMMARY.reviewCount} reviews from travellers who took these tours
+                Reviews from travellers who took these tours
               </p>
               <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">
-                Every review is public and independently hosted on Tripadvisor, where Sunshine Tours
-                has been recognised {SUMMARY.award.toLowerCase()} year after year.
+                Every review is public and independently hosted on Tripadvisor.
               </p>
               <span className="mt-6 inline-flex items-center justify-center gap-1.5 text-sm font-bold text-emerald-700 group-hover:underline dark:text-emerald-300">
                 Read them on Tripadvisor

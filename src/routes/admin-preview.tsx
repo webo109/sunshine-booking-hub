@@ -100,10 +100,7 @@ function AdminPreviewPage() {
       </DashboardShell>
 
       {openBooking && (
-        <BookingDetailDrawer
-          booking={openBooking}
-          onClose={() => setOpenBookingRef(null)}
-        />
+        <BookingDetailDrawer booking={openBooking} onClose={() => setOpenBookingRef(null)} />
       )}
     </div>
   );
@@ -218,8 +215,7 @@ function RevenueStrip() {
             <span className="text-amber-700 dark:text-amber-300">
               {formatOMR(r.todayPending)} pending
             </span>{" "}
-            ·{" "}
-            <span className="text-destructive">{formatOMR(r.todayAtRisk)} at risk</span>
+            · <span className="text-destructive">{formatOMR(r.todayAtRisk)} at risk</span>
           </div>
         </div>
         <div>
@@ -233,9 +229,7 @@ function RevenueStrip() {
             <span
               className={cn(
                 "inline-flex items-center gap-0.5 text-[11px] font-bold",
-                r.weekDeltaPct >= 0
-                  ? "text-emerald-700 dark:text-emerald-300"
-                  : "text-destructive",
+                r.weekDeltaPct >= 0 ? "text-emerald-700 dark:text-emerald-300" : "text-destructive",
               )}
             >
               {r.weekDeltaPct >= 0 ? (
@@ -246,9 +240,7 @@ function RevenueStrip() {
               {Math.abs(r.weekDeltaPct)}%
             </span>
           </div>
-          <div className="mt-0.5 text-[11px] text-muted-foreground">
-            vs same week last month
-          </div>
+          <div className="mt-0.5 text-[11px] text-muted-foreground">vs same week last month</div>
         </div>
         <div>
           <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
@@ -504,13 +496,7 @@ function ActionRow({
   );
 }
 
-function TourRow({
-  tour,
-  onOpenBooking,
-}: {
-  tour: ScheduledTour;
-  onOpenBooking: () => void;
-}) {
+function TourRow({ tour, onOpenBooking }: { tour: ScheduledTour; onOpenBooking: () => void }) {
   const statusBadge = {
     ok: { label: "Ready", classes: "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300" },
     warning: {
@@ -579,9 +565,7 @@ function TourRow({
 // ─── Week view ──────────────────────────────────────────────────────────────
 function WeekView({ onOpenBooking }: { onOpenBooking: (ref: string) => void }) {
   const totalRevenue = useMemo(() => {
-    return weekDays
-      .flatMap((d) => d.tours)
-      .reduce((sum, t) => sum + t.revenueOmr, 0);
+    return weekDays.flatMap((d) => d.tours).reduce((sum, t) => sum + t.revenueOmr, 0);
   }, []);
   const totalBookings = useMemo(() => weekDays.flatMap((d) => d.tours).length, []);
   return (
@@ -806,9 +790,8 @@ function BookingsView({ onOpenBooking }: { onOpenBooking: (ref: string) => void 
     {
       id: "upcoming",
       label: "Upcoming",
-      count: detailedBookings.filter(
-        (b) => !b.date.startsWith("Today") && b.status !== "Cancelled",
-      ).length,
+      count: detailedBookings.filter((b) => !b.date.startsWith("Today") && b.status !== "Cancelled")
+        .length,
     },
   ];
 
@@ -1074,7 +1057,9 @@ function BookingDetailDrawer({
               <OpsRow
                 icon={MapPin}
                 label="Pickup"
-                value={booking.pickup ? `${booking.pickup.hotel} at ${booking.pickup.time}` : undefined}
+                value={
+                  booking.pickup ? `${booking.pickup.hotel} at ${booking.pickup.time}` : undefined
+                }
                 suggestion={
                   booking.pickup
                     ? booking.pickup.confirmed
@@ -1125,7 +1110,8 @@ function BookingDetailDrawer({
                 <Mail className="h-3 w-3" /> Email
               </button>
               <span className="ml-auto inline-flex items-center gap-1 rounded-full bg-brand/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-brand">
-                <Sparkles className="h-3 w-3" /> Auto-translate to {booking.customer.primaryLanguage}
+                <Sparkles className="h-3 w-3" /> Auto-translate to{" "}
+                {booking.customer.primaryLanguage}
               </span>
             </div>
             <textarea
@@ -1236,9 +1222,8 @@ function BusinessView() {
           The business beneath the day-to-day
         </h2>
         <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
-          Reviewed weekly, not daily. Margin per tour, where bookings come from, and which
-          patterns you'd otherwise miss. Most of these signals get sharper after 90 days of real
-          data.
+          Reviewed weekly, not daily. Margin per tour, where bookings come from, and which patterns
+          you'd otherwise miss. Most of these signals get sharper after 90 days of real data.
         </p>
       </div>
 
@@ -1341,8 +1326,8 @@ function BusinessView() {
           Patterns worth noticing
         </div>
         <p className="mt-1 text-sm text-muted-foreground">
-          Generated from your booking history. A separate report drops to your WhatsApp every
-          Sunday morning with the highlights.
+          Generated from your booking history. A separate report drops to your WhatsApp every Sunday
+          morning with the highlights.
         </p>
         <div className="mt-4 grid gap-3 md:grid-cols-2">
           <InsightCard
@@ -1400,7 +1385,12 @@ function InsightCard({
         };
   return (
     <article className={cn("rounded-2xl border p-5", meta.classes)}>
-      <div className={cn("inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest", meta.iconClass)}>
+      <div
+        className={cn(
+          "inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest",
+          meta.iconClass,
+        )}
+      >
         <meta.icon className="h-3 w-3" /> {meta.label}
       </div>
       <h3 className="mt-2 font-display text-base font-bold text-foreground">{title}</h3>

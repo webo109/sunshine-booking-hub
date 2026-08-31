@@ -59,8 +59,18 @@ export function formatDateRange(start: Date | string, end: Date | string): strin
 }
 
 export function isFridayOrPast(date: Date): boolean {
+  return isUnavailable(date, false);
+}
+
+/**
+ * Past dates are always unavailable. Fridays are unavailable by default (the
+ * operator's normal rest day), except for tours that specifically run on a
+ * Friday, such as the Nizwa Friday Goat Souq.
+ */
+export function isUnavailable(date: Date, allowFriday: boolean): boolean {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   if (date < today) return true;
+  if (allowFriday) return false;
   return date.getDay() === 5; // Friday
 }

@@ -50,8 +50,7 @@ export const todayActions: ActionItem[] = [
     urgency: "critical",
     kind: "respond-inquiry",
     title: "WhatsApp inquiry · 92 min unread",
-    context:
-      'Hans Müller (German) · "Sind diese Daten für 4 Personen verfügbar? Wahiba 12-13 Mai"',
+    context: 'Hans Müller (German) · "Sind diese Daten für 4 Personen verfügbar? Wahiba 12-13 Mai"',
     meta: "AI drafted reply ready in German · review and send",
     cta: "Open draft",
   },
@@ -70,8 +69,7 @@ export const todayActions: ActionItem[] = [
     urgency: "warning",
     kind: "review-response",
     title: "New TripAdvisor review · 5 stars",
-    context:
-      'Anna Kowalski · "Khalid was the most knowledgeable guide I\'ve had in any country."',
+    context: 'Anna Kowalski · "Khalid was the most knowledgeable guide I\'ve had in any country."',
     meta: "Posted 3 hours ago · respond within 24h for best engagement",
     cta: "Draft thank-you",
   },
@@ -522,8 +520,7 @@ export const detailedBookings: DetailedBooking[] = [
         channel: "whatsapp",
         at: "9 days ago · 19:50",
         description: "Auto-reply sent in German",
-        bodyExcerpt:
-          "Hallo Lisa! Ja, klare Sicht erwartet. Mai ist eine perfekte Wüstenzeit.",
+        bodyExcerpt: "Hallo Lisa! Ja, klare Sicht erwartet. Mai ist eine perfekte Wüstenzeit.",
         fromAgent: true,
       },
       {
@@ -700,7 +697,8 @@ export const detailedBookings: DetailedBooking[] = [
         description: "Hotel confirmed pickup",
       },
     ],
-    notes: "Two children (8 and 11). Khalid briefed on family pace. Paying by card at the office tomorrow morning.",
+    notes:
+      "Two children (8 and 11). Khalid briefed on family pace. Paying by card at the office tomorrow morning.",
   },
   {
     reference: "STO-NZ8K2",
@@ -764,8 +762,7 @@ export const inbox: InboxMessage[] = [
     receivedAt: "92 min ago",
     language: "German",
     preview: "Sind diese Daten für 4 Personen verfügbar? Wahiba 12-13 Mai",
-    draftPreview:
-      "Hallo Hans! Ja, der 12.-13. Mai ist verfügbar für 4 Personen. Der Preis...",
+    draftPreview: "Hallo Hans! Ja, der 12.-13. Mai ist verfügbar für 4 Personen. Der Preis...",
     unreadMinutes: 92,
   },
   {
@@ -776,8 +773,7 @@ export const inbox: InboxMessage[] = [
     receivedAt: "4 hours ago",
     language: "French",
     preview: "Merci beaucoup pour la magnifique excursion d'hier !",
-    draftPreview:
-      "Avec plaisir Sophie ! Pourriez-vous laisser un mot sur TripAdvisor ?...",
+    draftPreview: "Avec plaisir Sophie ! Pourriez-vous laisser un mot sur TripAdvisor ?...",
     unreadMinutes: 240,
   },
   {
@@ -788,8 +784,7 @@ export const inbox: InboxMessage[] = [
     receivedAt: "8 hours ago",
     language: "Spanish",
     preview: "Estoy buscando un paquete de luna de miel para julio...",
-    draftPreview:
-      "Hola Carlos, qué bonito plan. Para luna de miel, recomendamos un viaje...",
+    draftPreview: "Hola Carlos, qué bonito plan. Para luna de miel, recomendamos un viaje...",
     unreadMinutes: 480,
   },
 ];

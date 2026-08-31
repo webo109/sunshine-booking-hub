@@ -51,9 +51,7 @@ export function TripSpanCard({
       ) : (
         <p className="mt-1.5 text-xs text-muted-foreground">Starts and ends the same day.</p>
       )}
-      <div className="mt-3 text-[11px] font-medium text-muted-foreground">
-        {durationLabel}
-      </div>
+      <div className="mt-3 text-[11px] font-medium text-muted-foreground">{durationLabel}</div>
     </div>
   );
 }

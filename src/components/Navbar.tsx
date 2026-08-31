@@ -21,14 +21,11 @@ const helpLinks = [
 export function Navbar() {
   const { theme, toggle } = useTheme();
   const [scrolled, setScrolled] = useState(false);
-  const [mobileHidden, setMobileHidden] = useState(false);
   const [open, setOpen] = useState(false);
   const [helpOpen, setHelpOpen] = useState(false);
   const helpRef = useRef<HTMLDivElement>(null);
-  const lastScrollYRef = useRef(0);
   const location = useLocation();
   const isHome = location.pathname === "/";
-  const isToursCatalog = location.pathname === "/tours";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -36,33 +33,6 @@ export function Navbar() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  useEffect(() => {
-    lastScrollYRef.current = window.scrollY;
-
-    const updateMobileVisibility = () => {
-      const isPhone = window.matchMedia("(max-width: 639px)").matches;
-      const currentY = window.scrollY;
-
-      if (!isToursCatalog || !isPhone || open || currentY < 80) {
-        setMobileHidden(false);
-      } else if (currentY > lastScrollYRef.current + 2) {
-        setMobileHidden(true);
-      } else if (currentY < lastScrollYRef.current - 2) {
-        setMobileHidden(false);
-      }
-
-      lastScrollYRef.current = currentY;
-    };
-
-    updateMobileVisibility();
-    window.addEventListener("scroll", updateMobileVisibility, { passive: true });
-    window.addEventListener("resize", updateMobileVisibility);
-    return () => {
-      window.removeEventListener("scroll", updateMobileVisibility);
-      window.removeEventListener("resize", updateMobileVisibility);
-    };
-  }, [isToursCatalog, open]);
 
   useEffect(() => {
     setOpen(false);
@@ -85,10 +55,7 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 border-b will-change-transform transition-[transform,opacity,background-color,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
-        mobileHidden
-          ? "-translate-y-full opacity-0 sm:translate-y-0 sm:opacity-100"
-          : "translate-y-0 opacity-100",
+        "fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
         transparent
           ? "border-transparent bg-transparent"
           : "glass border-border/40 shadow-[0_8px_30px_-12px_oklch(0.1_0.02_250/0.2)]",
