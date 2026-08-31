@@ -12,7 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as UnsubscribeRouteImport } from './routes/unsubscribe'
 import { Route as TransfersRouteImport } from './routes/transfers'
 import { Route as ToursRouteImport } from './routes/tours'
-import { Route as TestReportRouteImport } from './routes/test-report'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -38,11 +37,6 @@ const TransfersRoute = TransfersRouteImport.update({
 const ToursRoute = ToursRouteImport.update({
   id: '/tours',
   path: '/tours',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TestReportRoute = TestReportRouteImport.update({
-  id: '/test-report',
-  path: '/test-report',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GalleryRoute = GalleryRouteImport.update({
@@ -110,7 +104,6 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
-  '/test-report': typeof TestReportRoute
   '/tours': typeof ToursRouteWithChildren
   '/transfers': typeof TransfersRoute
   '/unsubscribe': typeof UnsubscribeRoute
@@ -127,7 +120,6 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
-  '/test-report': typeof TestReportRoute
   '/tours': typeof ToursRouteWithChildren
   '/transfers': typeof TransfersRoute
   '/unsubscribe': typeof UnsubscribeRoute
@@ -145,7 +137,6 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
-  '/test-report': typeof TestReportRoute
   '/tours': typeof ToursRouteWithChildren
   '/transfers': typeof TransfersRoute
   '/unsubscribe': typeof UnsubscribeRoute
@@ -164,7 +155,6 @@ export interface FileRouteTypes {
     | '/contact'
     | '/faq'
     | '/gallery'
-    | '/test-report'
     | '/tours'
     | '/transfers'
     | '/unsubscribe'
@@ -181,7 +171,6 @@ export interface FileRouteTypes {
     | '/contact'
     | '/faq'
     | '/gallery'
-    | '/test-report'
     | '/tours'
     | '/transfers'
     | '/unsubscribe'
@@ -198,7 +187,6 @@ export interface FileRouteTypes {
     | '/contact'
     | '/faq'
     | '/gallery'
-    | '/test-report'
     | '/tours'
     | '/transfers'
     | '/unsubscribe'
@@ -216,7 +204,6 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
   GalleryRoute: typeof GalleryRoute
-  TestReportRoute: typeof TestReportRoute
   ToursRoute: typeof ToursRouteWithChildren
   TransfersRoute: typeof TransfersRoute
   UnsubscribeRoute: typeof UnsubscribeRoute
@@ -245,13 +232,6 @@ declare module '@tanstack/react-router' {
       path: '/tours'
       fullPath: '/tours'
       preLoaderRoute: typeof ToursRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/test-report': {
-      id: '/test-report'
-      path: '/test-report'
-      fullPath: '/test-report'
-      preLoaderRoute: typeof TestReportRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/gallery': {
@@ -353,7 +333,6 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,
   GalleryRoute: GalleryRoute,
-  TestReportRoute: TestReportRoute,
   ToursRoute: ToursRouteWithChildren,
   TransfersRoute: TransfersRoute,
   UnsubscribeRoute: UnsubscribeRoute,
